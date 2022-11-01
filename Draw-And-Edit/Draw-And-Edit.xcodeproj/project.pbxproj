@@ -10,9 +10,9 @@
 		E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */; };
 		E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */; };
 		E29FECC5291175BB00F6DDE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* ViewController.swift */; };
-		E29FECC8291175BB00F6DDE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29FECC6291175BB00F6DDE5 /* Main.storyboard */; };
 		E29FECCA291175BC00F6DDE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29FECC9291175BC00F6DDE5 /* Assets.xcassets */; };
 		E29FECCD291175BC00F6DDE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */; };
+		E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECD62911789400F6DDE5 /* IPTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +20,10 @@
 		E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E29FECC4291175BB00F6DDE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E29FECC7291175BB00F6DDE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E29FECC9291175BC00F6DDE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E29FECCC291175BC00F6DDE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E29FECCE291175BC00F6DDE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E29FECD62911789400F6DDE5 /* IPTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +56,31 @@
 		E29FECBF291175BB00F6DDE5 /* Draw-And-Edit */ = {
 			isa = PBXGroup;
 			children = (
-				E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */,
-				E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */,
+				E29FECD52911786300F6DDE5 /* TextView */,
+				E29FECD42911785500F6DDE5 /* Application */,
 				E29FECC4291175BB00F6DDE5 /* ViewController.swift */,
-				E29FECC6291175BB00F6DDE5 /* Main.storyboard */,
 				E29FECC9291175BC00F6DDE5 /* Assets.xcassets */,
 				E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */,
 				E29FECCE291175BC00F6DDE5 /* Info.plist */,
 			);
 			path = "Draw-And-Edit";
+			sourceTree = "<group>";
+		};
+		E29FECD42911785500F6DDE5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */,
+				E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		E29FECD52911786300F6DDE5 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				E29FECD62911789400F6DDE5 /* IPTextView.swift */,
+			);
+			path = TextView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +143,6 @@
 			files = (
 				E29FECCD291175BC00F6DDE5 /* LaunchScreen.storyboard in Resources */,
 				E29FECCA291175BC00F6DDE5 /* Assets.xcassets in Resources */,
-				E29FECC8291175BB00F6DDE5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +153,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
 				E29FECC5291175BB00F6DDE5 /* ViewController.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
@@ -147,14 +163,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E29FECC6291175BB00F6DDE5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E29FECC7291175BB00F6DDE5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -292,7 +300,6 @@
 				INFOPLIST_FILE = "Draw-And-Edit/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -321,7 +328,6 @@
 				INFOPLIST_FILE = "Draw-And-Edit/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
