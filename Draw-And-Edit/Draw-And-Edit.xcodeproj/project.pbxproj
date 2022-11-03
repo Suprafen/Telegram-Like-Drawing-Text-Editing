@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CCE122914436800020C22 /* IPUIViewExtension.swift */; };
 		E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */; };
 		E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */; };
-		E29FECC5291175BB00F6DDE5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* ViewController.swift */; };
+		E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */; };
 		E29FECCA291175BC00F6DDE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29FECC9291175BC00F6DDE5 /* Assets.xcassets */; };
 		E29FECCD291175BC00F6DDE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */; };
 		E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECD62911789400F6DDE5 /* IPTextView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E20CCE122914436800020C22 /* IPUIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPUIViewExtension.swift; sourceTree = "<group>"; };
 		E29FECBD291175BB00F6DDE5 /* Draw-And-Edit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Draw-And-Edit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E29FECC4291175BB00F6DDE5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMapViewController.swift; sourceTree = "<group>"; };
 		E29FECC9291175BC00F6DDE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E29FECCC291175BC00F6DDE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E29FECCE291175BC00F6DDE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +39,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E20CCE112914435400020C22 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E20CCE122914436800020C22 /* IPUIViewExtension.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		E29FECB4291175BA00F6DDE5 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +66,10 @@
 		E29FECBF291175BB00F6DDE5 /* Draw-And-Edit */ = {
 			isa = PBXGroup;
 			children = (
+				E20CCE112914435400020C22 /* Library */,
 				E29FECD52911786300F6DDE5 /* TextView */,
 				E29FECD42911785500F6DDE5 /* Application */,
-				E29FECC4291175BB00F6DDE5 /* ViewController.swift */,
+				E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */,
 				E29FECC9291175BC00F6DDE5 /* Assets.xcassets */,
 				E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */,
 				E29FECCE291175BC00F6DDE5 /* Info.plist */,
@@ -154,7 +165,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
-				E29FECC5291175BB00F6DDE5 /* ViewController.swift in Sources */,
+				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,
+				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
 			);

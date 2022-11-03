@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = ViewController()
+        window?.rootViewController = IPMapViewController()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
