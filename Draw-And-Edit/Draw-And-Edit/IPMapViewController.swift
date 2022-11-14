@@ -36,7 +36,7 @@ class IPMapViewController: UIViewController {
     
     var customTextView: IPTextView?
     
-    var addButton: UIButton = {
+    var addNewTextViewButton: UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.addTarget(nil, action: #selector(addNewTextView), for: .touchUpInside)
@@ -46,68 +46,83 @@ class IPMapViewController: UIViewController {
         return button
     }()
     
-    var addCALayerButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        button.setImage(UIImage(systemName: "plus")?.withTintColor(.systemOrange), for: .normal)
-        button.addTarget(nil, action: #selector(addCALayer), for: .touchUpInside)
+    let doneButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Done", for: .normal)
+        button.isHidden = true
+        button.addTarget(nil, action: #selector(doneButtonTapped), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
     
-    var removeCALayerButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        button.setImage(UIImage(systemName: "minus")?.withTintColor(.systemOrange), for: .normal)
-        button.addTarget(nil, action: #selector(removeCALayer), for: .touchUpInside)
+    let cancelButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Cancel", for: .normal)
+        button.isHidden = true
+        button.addTarget(nil, action: #selector(cancelButtonTapped), for: .touchUpInside)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
     }()
+    
+    
+    // MARK: Background Darkner
+    let backgroundDarknerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.4)
+        view.isHidden = true
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+
+    var helperViewsHidden: Bool = true {
+        willSet(newValue) {
+            doneButton.isHidden = newValue
+            cancelButton.isHidden = newValue
+            backgroundDarknerView.isHidden = newValue
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         
-        setupTextViews()
-        setupConstraints()
-    }
-     // Click on the button
-    func setupTextViews() {
-        
-        view.addSubview(addButton)
-        view.addSubview(addCALayerButton)
-        view.addSubview(removeCALayerButton)
-        // add layout container, manager and storage
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-        
-        // initialize textview
-        customTextView = IPTextView(frame: CGRect(x: 50, y: 50, width: 300, height: 200), textContainer: textContainer)
-        
-        
-        
-        guard let customTextView = customTextView else { return }
-        
-        customTextView.layer.borderWidth = 1
-        
-        view.addSubview(customTextView)
-        view.center = customTextView.center
+        addDarknerAndHelperButtons()
+        setupViews()
     }
     
-    func setupConstraints() {
+    func setupViews() {
+        view.addSubview(addNewTextViewButton)
+        
         NSLayoutConstraint.activate([
-            addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            addNewTextViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addNewTextViewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
+        ])
+    }
+    
+    func addDarknerAndHelperButtons() {
+        self.view.addSubview(backgroundDarknerView)
+        self.view.addSubview(doneButton)
+        self.view.addSubview(cancelButton)
+        
+        NSLayoutConstraint.activate([
+            backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundDarknerView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundDarknerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundDarknerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            addCALayerButton.leadingAnchor.constraint(equalTo: addButton.trailingAnchor, constant: 30),
-            addCALayerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             
+            doneButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             
-            removeCALayerButton.leadingAnchor.constraint(equalTo: addCALayerButton.leadingAnchor, constant: 30),
-            removeCALayerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+            cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
         ])
     }
 }
@@ -133,8 +148,8 @@ extension IPMapViewController {
 //MARK: - Selectors
 extension IPMapViewController {
     @objc func addNewTextView() {
-        // TODO: First version. Should change
-        // here, somehow, I need to deal with text container, layuot manager and text storage
+        helperViewsHidden = false
+        
         let locaTextContainer: NSTextContainer = {
             let textContainer = NSTextContainer(size: .zero)
             
@@ -163,6 +178,7 @@ extension IPMapViewController {
         
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
                                   textContainer: locaTextContainer)
+        textView.backgroundColor = .clear
         textView.layer.borderWidth = 1
         
         view.addSubview(textView)
@@ -178,12 +194,24 @@ extension IPMapViewController {
         
         view.layer.addSublayer(layer)
     }
-
     
-    @objc func removeCALayer() {
-        if let layers = view.layer.sublayers {
-            print("Layers: \(layers)")
-        }
-//        view.layer.sublayers?.removeLast()
+    @objc func doneButtonTapped() {
+        helperViewsHidden = true
+        
+        guard let firstResponder = view.firstResponder else { return }
+        
+        firstResponder.resignFirstResponder()
+    }
+    
+    @objc func cancelButtonTapped() {
+        helperViewsHidden = true
+        
+        guard let firstResponder = view.firstResponder else { return }
+        
+        firstResponder.resignFirstResponder()
+        
+        guard let lastView = view.subviews.last else { return }
+        
+        lastView.removeFromSuperview()
     }
 }
