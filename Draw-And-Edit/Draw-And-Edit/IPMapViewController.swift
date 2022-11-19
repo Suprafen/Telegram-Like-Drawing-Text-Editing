@@ -80,13 +80,53 @@ class IPMapViewController: UIViewController {
         return view
     }()
 
+    
+    //MARK: - Text Editing Buttons.
+    let alignmentChangeButton: UIButton = {
+        let button = UIButton()
+        
+        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate)
+        button.setTitle("Alignment", for: .normal)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        button.isHidden = true
+        button.addTarget(nil, action: #selector(alignmentChangeButtonTapped), for: .touchUpInside)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    let fillChangeButton: UIButton = {
+        let button = UIButton()
+        
+        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate)
+        button.setTitle("Fill", for: .normal)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        button.isHidden = true
+        button.addTarget(nil, action: #selector(fillChangeButtonTapped), for: .touchUpInside)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
+    
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
             doneButton.isHidden = newValue
             cancelButton.isHidden = newValue
             backgroundDarknerView.isHidden = newValue
+            
+            fillChangeButton.isHidden = newValue
+            alignmentChangeButton.isHidden = newValue
         }
     }
+    
+    // MARK: - Stored properties
+    
+    var appStateController = AppStateController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,6 +151,11 @@ class IPMapViewController: UIViewController {
         self.view.addSubview(doneButton)
         self.view.addSubview(cancelButton)
         
+        //MARK: - Text Editing Buttons.
+        
+        self.view.addSubview(alignmentChangeButton)
+        self.view.addSubview(fillChangeButton)
+        
         NSLayoutConstraint.activate([
             backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundDarknerView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -122,7 +167,13 @@ class IPMapViewController: UIViewController {
             doneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
             
             cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50)
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            
+            alignmentChangeButton.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 20),
+            alignmentChangeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            
+            fillChangeButton.topAnchor.constraint(equalTo: doneButton.bottomAnchor, constant: 20),
+            fillChangeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
         ])
     }
 }
@@ -165,7 +216,7 @@ extension IPMapViewController {
         }()
         
         let localTextStorage: NSTextStorage = {
-            let attrStr = NSAttributedString(string: "Text here", attributes: [.font : UIFont.boldSystemFont(ofSize: 15)])
+            let attrStr = NSAttributedString(string: "Text here", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
             
             let mutAttrStr = NSMutableAttributedString(attributedString: attrStr)
             let textStorage = NSTextStorage(attributedString: mutAttrStr)
@@ -213,5 +264,78 @@ extension IPMapViewController {
         guard let lastView = view.subviews.last else { return }
         
         lastView.removeFromSuperview()
+    }
+    
+    @objc func fillChangeButtonTapped() {
+        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        
+        var attributes: [NSAttributedString.Key : Any] = [.font : UIFont(name: "HelveticaNeue", size: 20)!]
+        
+        // TODO: Add conditional that add something to attributes depends on values on stored properties
+        
+        
+        appStateController.changeFilledState()
+        
+        
+        switch appStateController.filledAs {
+            
+        case .normal:
+            
+            break
+            
+        case .fill:
+            // TODO: Not asign the new dic to attributes but add key:value pair
+            // So you can use old values
+            attributes = [.backgroundColor : UIColor.black, .foregroundColor : UIColor.white]
+            
+        case .fifthFill:
+            
+            attributes = [.backgroundColor : UIColor.black.withAlphaComponent(0.2)]
+            
+        case .stroke:
+            
+            attributes = [.strokeColor : UIColor.black, .strokeColor : 1]
+            
+        }
+        /*
+         Something like that:
+         ....
+         if fillState == .stroke {
+            attributes = [.strokeColor : UIColor.black, .strokeWidth : 1.5]
+         }
+         ...
+         
+         And so on...
+         
+         
+         ... or, we could place that logic to computed property that handle everyhing but we just change the value in that or similar methods.
+        */
+        let currentTextViewTextStorage = activeTextView.textStorage
+        
+        let attributedString = NSAttributedString(string: currentTextViewTextStorage.string, attributes: attributes)
+        
+        currentTextViewTextStorage.setAttributedString(attributedString)
+    }
+    
+    @objc func alignmentChangeButtonTapped() {
+        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        
+        appStateController.changeAlignmentState()
+        
+        switch appStateController.alignment {
+            
+        case .left:
+            
+            activeTextView.textAlignment = .left
+            
+        case .center:
+            
+            activeTextView.textAlignment = .center
+            
+        case .right:
+            
+            activeTextView.textAlignment = .right
+            
+        }
     }
 }

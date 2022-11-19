@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CCE122914436800020C22 /* IPUIViewExtension.swift */; };
+		E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84429298BB100854E53 /* IPTextFillState.swift */; };
+		E25BE84729298C0400854E53 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84629298C0400854E53 /* AppStateController.swift */; };
+		E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */; };
 		E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */; };
 		E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */; };
 		E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */; };
@@ -18,6 +21,9 @@
 
 /* Begin PBXFileReference section */
 		E20CCE122914436800020C22 /* IPUIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPUIViewExtension.swift; sourceTree = "<group>"; };
+		E25BE84429298BB100854E53 /* IPTextFillState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextFillState.swift; sourceTree = "<group>"; };
+		E25BE84629298C0400854E53 /* AppStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
+		E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextAlignmentState.swift; sourceTree = "<group>"; };
 		E29FECBD291175BB00F6DDE5 /* Draw-And-Edit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Draw-And-Edit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +49,8 @@
 			isa = PBXGroup;
 			children = (
 				E20CCE122914436800020C22 /* IPUIViewExtension.swift */,
+				E25BE84429298BB100854E53 /* IPTextFillState.swift */,
+				E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -73,6 +81,7 @@
 				E29FECC9291175BC00F6DDE5 /* Assets.xcassets */,
 				E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */,
 				E29FECCE291175BC00F6DDE5 /* Info.plist */,
+				E25BE84629298C0400854E53 /* AppStateController.swift */,
 			);
 			path = "Draw-And-Edit";
 			sourceTree = "<group>";
@@ -164,11 +173,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */,
 				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
 				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,
+				E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */,
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
+				E25BE84729298C0400854E53 /* AppStateController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
