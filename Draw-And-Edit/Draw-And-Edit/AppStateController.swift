@@ -16,18 +16,18 @@ class AppStateController {
     // TODO: Make functions generic
     
     func changeFilledState() {
-        print("Current index: \(filledAs)")
+        
         let count = IPTextFillState.allCases.count
-        let index = count / (filledAs.rawValue + 1) != 1 ? filledAs.rawValue + 1 : 0
+        let index = count > (filledAs.rawValue + 1) ? filledAs.rawValue + 1 : 0
         filledAs = IPTextFillState(rawValue: index) ?? .normal
-        print("Current index(after click): \(filledAs)")
+        
     }
     
     func changeAlignmentState() {
-        print("Current index alignment: \(alignment)")
+        
         let count = IPTextAlignmentState.allCases.count
-        let index = count / (alignment.rawValue + 1) != 1 ? alignment.rawValue + 1 : 0
+        let index = count > (alignment.rawValue + 1) ? alignment.rawValue + 1 : 0
         alignment = IPTextAlignmentState(rawValue: index) ?? .left
-        print("Current index alignment(after click): \(alignment)")
+        
     }
 }

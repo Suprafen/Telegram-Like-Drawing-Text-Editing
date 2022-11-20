@@ -107,6 +107,7 @@ class IPMapViewController: UIViewController {
     
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
+            
             doneButton.isHidden = newValue
             cancelButton.isHidden = newValue
             backgroundDarknerView.isHidden = newValue
@@ -264,9 +265,7 @@ extension IPMapViewController {
     @objc func fillChangeBarButtonTapped() {
         guard let activeTextView = view.firstResponder as? IPTextView else { return }
         
-        var attributes: [NSAttributedString.Key : Any] = [.font : UIFont(name: "HelveticaNeue", size: 20)!]
-        
-        // TODO: Add conditional that add something to attributes depends on values on stored properties
+        var attributes: [NSAttributedString.Key : Any] = [.font : UIFont(name: "HelveticaNeue-Medium", size: 20)!]
         
         appStateController.changeFilledState()
         
@@ -277,37 +276,31 @@ extension IPMapViewController {
             break
             
         case .fill:
-            // TODO: Not asign the new dic to attributes but add key:value pair
-            // So you can use old values
-            attributes = [.backgroundColor : UIColor.black, .foregroundColor : UIColor.white]
+            
+            attributes[.backgroundColor] = UIColor.black
+            attributes[.foregroundColor] = UIColor.white
             
         case .fifthFill:
             
-            attributes = [.backgroundColor : UIColor.black.withAlphaComponent(0.2)]
+            attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0.2)
+            attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
             
-            attributes = [.strokeColor : UIColor.black, .strokeColor : 1]
+            attributes[.backgroundColor] = UIColor.clear
+            attributes[.foregroundColor] = UIColor.white
+            attributes[.strokeColor] = UIColor.black
+            attributes[.strokeWidth] = 3
             
         }
-        /*
-         Something like that:
-         ....
-         if fillState == .stroke {
-            attributes = [.strokeColor : UIColor.black, .strokeWidth : 1.5]
-         }
-         ...
-         
-         And so on...
-         
-         
-         ... or, we could place that logic to computed property that handle everyhing but we just change the value in that or similar methods.
-        */
+
         let currentTextViewTextStorage = activeTextView.textStorage
         
         let attributedString = NSAttributedString(string: currentTextViewTextStorage.string, attributes: attributes)
         
         currentTextViewTextStorage.setAttributedString(attributedString)
+        
+        activeTextView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
     }
     
     @objc func alignmentChangeBarButtonTapped() {
