@@ -82,33 +82,25 @@ class IPMapViewController: UIViewController {
 
     
     //MARK: - Text Editing Buttons.
-    let alignmentChangeButton: UIButton = {
-        let button = UIButton()
-        
-        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate)
-        button.setTitle("Alignment", for: .normal)
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        button.isHidden = true
-        button.addTarget(nil, action: #selector(alignmentChangeButtonTapped), for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
+    let alignmentChangeBarButton: UIBarButtonItem = {
+        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate).withTintColor(.white)
+
+        let button = UIBarButtonItem(image: image,
+                                     style: .plain,
+                                     target: nil,
+                                     action: #selector(alignmentChangeBarButtonTapped))
         
         return button
     }()
     
-    let fillChangeButton: UIButton = {
-        let button = UIButton()
-        
-        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate)
-        button.setTitle("Fill", for: .normal)
-        button.setImage(image, for: .normal)
-        button.tintColor = .white
-        button.isHidden = true
-        button.addTarget(nil, action: #selector(fillChangeButtonTapped), for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
+    let fillChangeBarButton: UIBarButtonItem = {
+        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate).withTintColor(.white)
+
+        let button = UIBarButtonItem(image: image,
+                                     style: .plain,
+                                     target: nil,
+                                     action: #selector(fillChangeBarButtonTapped))
+
         return button
     }()
     
@@ -119,8 +111,6 @@ class IPMapViewController: UIViewController {
             cancelButton.isHidden = newValue
             backgroundDarknerView.isHidden = newValue
             
-            fillChangeButton.isHidden = newValue
-            alignmentChangeButton.isHidden = newValue
         }
     }
     
@@ -146,15 +136,20 @@ class IPMapViewController: UIViewController {
         ])
     }
     
+    func setupTextViewToolbar(_ sender: IPTextView) {
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        
+        toolBar.items = [fillChangeBarButton, alignmentChangeBarButton]
+        toolBar.tintColor = .black
+        toolBar.sizeToFit()
+        
+        sender.inputAccessoryView = toolBar
+    }
+    
     func addDarknerAndHelperButtons() {
         self.view.addSubview(backgroundDarknerView)
         self.view.addSubview(doneButton)
         self.view.addSubview(cancelButton)
-        
-        //MARK: - Text Editing Buttons.
-        
-        self.view.addSubview(alignmentChangeButton)
-        self.view.addSubview(fillChangeButton)
         
         NSLayoutConstraint.activate([
             backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -169,11 +164,6 @@ class IPMapViewController: UIViewController {
             cancelButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             
-            alignmentChangeButton.topAnchor.constraint(equalTo: cancelButton.bottomAnchor, constant: 20),
-            alignmentChangeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            
-            fillChangeButton.topAnchor.constraint(equalTo: doneButton.bottomAnchor, constant: 20),
-            fillChangeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
         ])
     }
 }
@@ -229,9 +219,14 @@ extension IPMapViewController {
         
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
                                   textContainer: locaTextContainer)
+        
+        setupTextViewToolbar(textView)
+        
         textView.backgroundColor = .clear
         textView.layer.borderWidth = 1
-        
+        textView.autocorrectionType = .no
+        // This line removes suggested words above the keyboard
+        textView.spellCheckingType = .no
         view.addSubview(textView)
         textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
         textView.center = view.center
@@ -266,16 +261,14 @@ extension IPMapViewController {
         lastView.removeFromSuperview()
     }
     
-    @objc func fillChangeButtonTapped() {
+    @objc func fillChangeBarButtonTapped() {
         guard let activeTextView = view.firstResponder as? IPTextView else { return }
         
         var attributes: [NSAttributedString.Key : Any] = [.font : UIFont(name: "HelveticaNeue", size: 20)!]
         
         // TODO: Add conditional that add something to attributes depends on values on stored properties
         
-        
         appStateController.changeFilledState()
-        
         
         switch appStateController.filledAs {
             
@@ -317,7 +310,7 @@ extension IPMapViewController {
         currentTextViewTextStorage.setAttributedString(attributedString)
     }
     
-    @objc func alignmentChangeButtonTapped() {
+    @objc func alignmentChangeBarButtonTapped() {
         guard let activeTextView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeAlignmentState()
