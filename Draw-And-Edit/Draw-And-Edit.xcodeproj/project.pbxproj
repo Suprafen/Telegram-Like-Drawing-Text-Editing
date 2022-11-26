@@ -17,6 +17,12 @@
 		E29FECCA291175BC00F6DDE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E29FECC9291175BC00F6DDE5 /* Assets.xcassets */; };
 		E29FECCD291175BC00F6DDE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */; };
 		E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECD62911789400F6DDE5 /* IPTextView.swift */; };
+		E2A6FF47292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF46292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift */; };
+		E2A6FF49292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF48292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift */; };
+		E2A6FF4B292A84EC00C72421 /* IPFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4A292A84EC00C72421 /* IPFont.swift */; };
+		E2A6FF4D292A84FC00C72421 /* IPAvailableFontsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4C292A84FC00C72421 /* IPAvailableFontsStorage.swift */; };
+		E2A6FF4F292A865800C72421 /* IPFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4E292A865800C72421 /* IPFontExtension.swift */; };
+		E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +38,12 @@
 		E29FECCC291175BC00F6DDE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E29FECCE291175BC00F6DDE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E29FECD62911789400F6DDE5 /* IPTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextView.swift; sourceTree = "<group>"; };
+		E2A6FF46292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontsCollectionViewController.swift; sourceTree = "<group>"; };
+		E2A6FF48292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontCollectionViewCell.swift; sourceTree = "<group>"; };
+		E2A6FF4A292A84EC00C72421 /* IPFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFont.swift; sourceTree = "<group>"; };
+		E2A6FF4C292A84FC00C72421 /* IPAvailableFontsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontsStorage.swift; sourceTree = "<group>"; };
+		E2A6FF4E292A865800C72421 /* IPFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFontExtension.swift; sourceTree = "<group>"; };
+		E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveUIViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,19 @@
 				E20CCE122914436800020C22 /* IPUIViewExtension.swift */,
 				E25BE84429298BB100854E53 /* IPTextFillState.swift */,
 				E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */,
+				E2A6FF4E292A865800C72421 /* IPFontExtension.swift */,
+				E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		E27C448D29329F6B0024D7C6 /* AvailableFontsCollection */ = {
+			isa = PBXGroup;
+			children = (
+				E2A6FF46292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift */,
+				E2A6FF48292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift */,
+			);
+			path = AvailableFontsCollection;
 			sourceTree = "<group>";
 		};
 		E29FECB4291175BA00F6DDE5 = {
@@ -74,6 +97,7 @@
 		E29FECBF291175BB00F6DDE5 /* Draw-And-Edit */ = {
 			isa = PBXGroup;
 			children = (
+				E27C448D29329F6B0024D7C6 /* AvailableFontsCollection */,
 				E20CCE112914435400020C22 /* Library */,
 				E29FECD52911786300F6DDE5 /* TextView */,
 				E29FECD42911785500F6DDE5 /* Application */,
@@ -82,6 +106,8 @@
 				E29FECCB291175BC00F6DDE5 /* LaunchScreen.storyboard */,
 				E29FECCE291175BC00F6DDE5 /* Info.plist */,
 				E25BE84629298C0400854E53 /* AppStateController.swift */,
+				E2A6FF4C292A84FC00C72421 /* IPAvailableFontsStorage.swift */,
+				E2A6FF4A292A84EC00C72421 /* IPFont.swift */,
 			);
 			path = "Draw-And-Edit";
 			sourceTree = "<group>";
@@ -174,13 +200,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */,
+				E2A6FF4F292A865800C72421 /* IPFontExtension.swift in Sources */,
+				E2A6FF4D292A84FC00C72421 /* IPAvailableFontsStorage.swift in Sources */,
 				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
 				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,
 				E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */,
+				E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */,
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
+				E2A6FF4B292A84EC00C72421 /* IPFont.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
 				E25BE84729298C0400854E53 /* AppStateController.swift in Sources */,
+				E2A6FF49292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift in Sources */,
+				E2A6FF47292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

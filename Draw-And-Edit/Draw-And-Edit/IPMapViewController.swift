@@ -104,6 +104,7 @@ class IPMapViewController: UIViewController {
         return button
     }()
     
+    let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
     
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
@@ -128,6 +129,12 @@ class IPMapViewController: UIViewController {
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
     func setupViews() {
         view.addSubview(addNewTextViewButton)
         
@@ -143,6 +150,23 @@ class IPMapViewController: UIViewController {
         toolBar.items = [fillChangeBarButton, alignmentChangeBarButton]
         toolBar.tintColor = .black
         toolBar.sizeToFit()
+        
+
+        collectionController.view!.translatesAutoresizingMaskIntoConstraints = false
+        collectionController.view.backgroundColor = .orange
+        
+        self.addChild(collectionController)
+        collectionController.didMove(toParent: self)
+
+        toolBar.addSubview(collectionController.view)
+        
+
+        NSLayoutConstraint.activate([
+            collectionController.view.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 5),
+            collectionController.view.leadingAnchor.constraint(equalTo: toolBar.leadingAnchor, constant: 5),
+            collectionController.view.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -5),
+            collectionController.view.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: 5)
+        ])
         
         sender.inputAccessoryView = toolBar
     }
@@ -190,6 +214,7 @@ extension IPMapViewController {
 //MARK: - Selectors
 extension IPMapViewController {
     @objc func addNewTextView() {
+        print("addNewTextView called")
         helperViewsHidden = false
         
         let locaTextContainer: NSTextContainer = {
@@ -207,7 +232,7 @@ extension IPMapViewController {
         }()
         
         let localTextStorage: NSTextStorage = {
-            let attrStr = NSAttributedString(string: "Text here", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
+            let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
             
             let mutAttrStr = NSMutableAttributedString(attributedString: attrStr)
             let textStorage = NSTextStorage(attributedString: mutAttrStr)
@@ -323,5 +348,16 @@ extension IPMapViewController {
             activeTextView.textAlignment = .right
             
         }
+    }
+    // MARK: Keyboard events
+    @objc func keyboardWillDisappear() {
+        print("Keyboard will disappear")
+        collectionController.collectionView.removeFromSuperview()
+        collectionController.willMove(toParent: nil)
+        collectionController.removeFromParent()
+    }
+    
+    @objc func keyboardWillAppear() {
+        
     }
 }
