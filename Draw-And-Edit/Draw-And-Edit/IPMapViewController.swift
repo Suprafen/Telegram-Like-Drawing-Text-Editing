@@ -135,12 +135,6 @@ class IPMapViewController: UIViewController {
         setupViews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-    
     func setupViews() {
         setupToolbar()
         
@@ -154,20 +148,20 @@ class IPMapViewController: UIViewController {
     func setupToolbar() {
         toolbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         
-        collectionController.view!.translatesAutoresizingMaskIntoConstraints = false
+        collectionController.collectionView!.translatesAutoresizingMaskIntoConstraints = false
         collectionController.view.backgroundColor = .orange
         
         self.addChild(collectionController)
         collectionController.didMove(toParent: self)
 
-        toolbar.addSubview(collectionController.view)
+        toolbar.addSubview(collectionController.collectionView)
         
 
         NSLayoutConstraint.activate([
-            collectionController.view.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
-            collectionController.view.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 90),
-            collectionController.view.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
-            collectionController.view.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5)
+            collectionController.collectionView.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
+            collectionController.collectionView.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 90),
+            collectionController.collectionView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
+            collectionController.collectionView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5)
         ])
         
         toolbar.items = [fillChangeBarButton, alignmentChangeBarButton]
@@ -247,7 +241,7 @@ extension IPMapViewController {
         
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
                                   textContainer: locaTextContainer)
-        
+        //TODO: Instead of subclassing toolbar class, create your own inputAccessoryView
         textView.inputAccessoryView = toolbar
         
         textView.backgroundColor = .clear
@@ -351,16 +345,5 @@ extension IPMapViewController {
             activeTextView.textAlignment = .right
             
         }
-    }
-    // MARK: Keyboard events
-    @objc func keyboardWillDisappear() {
-        print("Keyboard will disappear")
-        collectionController.collectionView.removeFromSuperview()
-        collectionController.willMove(toParent: nil)
-        collectionController.removeFromParent()
-    }
-    
-    @objc func keyboardWillAppear() {
-        
     }
 }
