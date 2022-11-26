@@ -80,7 +80,14 @@ class IPMapViewController: UIViewController {
         return view
     }()
 
-    
+    let toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        
+        toolbar.tintColor = .black
+        toolbar.sizeToFit()
+        
+        return toolbar
+    }()
     //MARK: - Text Editing Buttons.
     let alignmentChangeBarButton: UIBarButtonItem = {
         let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate).withTintColor(.white)
@@ -103,6 +110,7 @@ class IPMapViewController: UIViewController {
 
         return button
     }()
+    // MARK: - Stored properties
     
     let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
     
@@ -115,8 +123,6 @@ class IPMapViewController: UIViewController {
             
         }
     }
-    
-    // MARK: - Stored properties
     
     var appStateController = AppStateController()
     
@@ -136,6 +142,8 @@ class IPMapViewController: UIViewController {
     }
     
     func setupViews() {
+        setupToolbar()
+        
         view.addSubview(addNewTextViewButton)
         
         NSLayoutConstraint.activate([
@@ -143,32 +151,26 @@ class IPMapViewController: UIViewController {
             addNewTextViewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
         ])
     }
-    
-    func setupTextViewToolbar(_ sender: IPTextView) {
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+    func setupToolbar() {
+        toolbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         
-        toolBar.items = [fillChangeBarButton, alignmentChangeBarButton]
-        toolBar.tintColor = .black
-        toolBar.sizeToFit()
-        
-
         collectionController.view!.translatesAutoresizingMaskIntoConstraints = false
         collectionController.view.backgroundColor = .orange
         
         self.addChild(collectionController)
         collectionController.didMove(toParent: self)
 
-        toolBar.addSubview(collectionController.view)
+        toolbar.addSubview(collectionController.view)
         
 
         NSLayoutConstraint.activate([
-            collectionController.view.topAnchor.constraint(equalTo: toolBar.topAnchor, constant: 5),
-            collectionController.view.leadingAnchor.constraint(equalTo: toolBar.leadingAnchor, constant: 5),
-            collectionController.view.trailingAnchor.constraint(equalTo: toolBar.trailingAnchor, constant: -5),
-            collectionController.view.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: 5)
+            collectionController.view.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
+            collectionController.view.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 5),
+            collectionController.view.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
+            collectionController.view.bottomAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5)
         ])
         
-        sender.inputAccessoryView = toolBar
+        toolbar.items = [fillChangeBarButton, alignmentChangeBarButton]
     }
     
     func addDarknerAndHelperButtons() {
@@ -246,7 +248,7 @@ extension IPMapViewController {
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
                                   textContainer: locaTextContainer)
         
-        setupTextViewToolbar(textView)
+        textView.inputAccessoryView = toolbar
         
         textView.backgroundColor = .clear
         textView.layer.borderWidth = 1
@@ -276,6 +278,7 @@ extension IPMapViewController {
     }
     
     @objc func cancelButtonTapped() {
+        //TODO: Keep in mind that this method can remove active text view ONLY if it is the first responder
         helperViewsHidden = true
         
         guard let firstResponder = view.firstResponder else { return }
