@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+//MARK: IMPORTANT TASKS
+//TODO: Create custom Tool Bar that conforms to UICollectionViewController and add a couple of buttons there
 class IPMapViewController: UIViewController {
     
     //TODO: Maybe put that stuff to the separate class
@@ -67,7 +68,6 @@ class IPMapViewController: UIViewController {
         
         return button
     }()
-    
     
     // MARK: Background Darkner
     let backgroundDarknerView: UIView = {
@@ -165,9 +165,9 @@ class IPMapViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             collectionController.view.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
-            collectionController.view.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 5),
+            collectionController.view.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 90),
             collectionController.view.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
-            collectionController.view.bottomAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5)
+            collectionController.view.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5)
         ])
         
         toolbar.items = [fillChangeBarButton, alignmentChangeBarButton]
