@@ -15,6 +15,8 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
         label.textAlignment = .center
         label.backgroundColor = .systemOrange
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
     
@@ -22,8 +24,13 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         self.addSubview(label)
-        
-        label.center = self.center
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+        ])
+       
     }
     
     required init?(coder: NSCoder) {
@@ -40,9 +47,9 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
 //        localTextStorage.setAttributedString(attributedString)
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        label.attributedText = nil
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        
+//        label.attributedText = nil
+//    }
 }
