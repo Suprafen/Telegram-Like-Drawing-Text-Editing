@@ -79,35 +79,36 @@ class IPMapViewController: UIViewController {
         
         return view
     }()
-
-    let toolbar: UIToolbar = {
-        let toolbar = UIToolbar()
+    
+    let toolbar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray6
         
-        toolbar.tintColor = .black
-        toolbar.sizeToFit()
-        
-        return toolbar
+        return view
     }()
+    
     //MARK: - Text Editing Buttons.
-    let alignmentChangeBarButton: UIBarButtonItem = {
-        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate).withTintColor(.white)
+    let alignmentChangeButton: UIButton = {
+        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
 
-        let button = UIBarButtonItem(image: image,
-                                     style: .plain,
-                                     target: nil,
-                                     action: #selector(alignmentChangeBarButtonTapped))
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(nil, action: #selector(alignmentChangeBarButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
-    let fillChangeBarButton: UIBarButtonItem = {
-        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate).withTintColor(.white)
-
-        let button = UIBarButtonItem(image: image,
-                                     style: .plain,
-                                     target: nil,
-                                     action: #selector(fillChangeBarButtonTapped))
-
+    let fillChangeButton: UIButton = {
+        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        
+        let button = UIButton()
+        button.setImage(image, for: .normal)
+        button.tintColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(nil, action: #selector(fillChangeBarButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     // MARK: - Stored properties
@@ -154,17 +155,26 @@ class IPMapViewController: UIViewController {
         self.addChild(collectionController)
         collectionController.didMove(toParent: self)
 
+        toolbar.addSubview(alignmentChangeButton)
+        toolbar.addSubview(fillChangeButton)
         toolbar.addSubview(collectionController.collectionView)
         
 
         NSLayoutConstraint.activate([
+            
+            alignmentChangeButton.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
+            alignmentChangeButton.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 5),
+            alignmentChangeButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5),
+            
+            fillChangeButton.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
+            fillChangeButton.leadingAnchor.constraint(equalTo: alignmentChangeButton.trailingAnchor, constant: 5),
+            fillChangeButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5),
+            
             collectionController.collectionView.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
-            collectionController.collectionView.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor, constant: 90),
+            collectionController.collectionView.leadingAnchor.constraint(equalTo: fillChangeButton.trailingAnchor, constant: 90),
             collectionController.collectionView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
             collectionController.collectionView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5)
         ])
-        
-        toolbar.items = [fillChangeBarButton, alignmentChangeBarButton]
     }
     
     func addDarknerAndHelperButtons() {
