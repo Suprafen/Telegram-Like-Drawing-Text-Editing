@@ -7,7 +7,7 @@
 
 import UIKit
 //MARK: IMPORTANT TASKS
-
+// TODO: Refactor code that responsible for setting attributes to a text. In filling. Same as for IPCollection View protocol. I mean with help of range.
 class IPMapViewController: UIViewController {
     
     //TODO: Maybe put that stuff to the separate class
@@ -154,7 +154,9 @@ class IPMapViewController: UIViewController {
         
         self.addChild(collectionController)
         collectionController.didMove(toParent: self)
-
+        
+        collectionController.delegate = self
+        
         toolbar.addSubview(alignmentChangeButton)
         toolbar.addSubview(fillChangeButton)
         toolbar.addSubview(collectionController.collectionView)
@@ -355,5 +357,31 @@ extension IPMapViewController {
             activeTextView.textAlignment = .right
             
         }
+    }
+}
+
+
+// MARK: - IPAvailableFontsCollectionViewControllerDelegate conformance
+extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate {
+    
+    func availableFontsCollectionViewController(chooseFont chosenFont: IPFont) {
+        
+        guard let activeTextView = view.firstResponder as? IPTextView,
+              let chosenFont = chosenFont.font,
+              let currentText = activeTextView.text else {
+            print("1st responder, chosen font or current text has fucked up!")
+            return
+        }
+        
+        let currentTextStorage = activeTextView.textStorage
+        
+        guard let range = currentText.range(of: currentText) else {
+            print("Range's fucked up")
+            return
+        }
+        
+        let convertedRange = NSRange(range, in: currentText)
+        
+        currentTextStorage.addAttributes([.font : chosenFont], range: convertedRange)
     }
 }

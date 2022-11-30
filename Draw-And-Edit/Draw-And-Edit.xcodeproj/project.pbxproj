@@ -23,6 +23,7 @@
 		E2A6FF4D292A84FC00C72421 /* IPAvailableFontsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4C292A84FC00C72421 /* IPAvailableFontsStorage.swift */; };
 		E2A6FF4F292A865800C72421 /* IPFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4E292A865800C72421 /* IPFontExtension.swift */; };
 		E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */; };
+		E2F4B3F329380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		E2A6FF4C292A84FC00C72421 /* IPAvailableFontsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontsStorage.swift; sourceTree = "<group>"; };
 		E2A6FF4E292A865800C72421 /* IPFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFontExtension.swift; sourceTree = "<group>"; };
 		E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveUIViewControllerExtension.swift; sourceTree = "<group>"; };
+		E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontsCollectionViewControllerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 			children = (
 				E2A6FF46292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift */,
 				E2A6FF48292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift */,
+				E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */,
 			);
 			path = AvailableFontsCollection;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				E25BE84729298C0400854E53 /* AppStateController.swift in Sources */,
 				E2A6FF49292A7E9600C72421 /* IPAvailableFontCollectionViewCell.swift in Sources */,
 				E2A6FF47292A55D600C72421 /* IPAvailableFontsCollectionViewController.swift in Sources */,
+				E2F4B3F329380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

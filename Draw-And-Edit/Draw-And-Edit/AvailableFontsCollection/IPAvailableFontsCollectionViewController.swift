@@ -17,6 +17,8 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, IPFont>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, IPFont>
     
+    var delegate: IPAvailableFontsCollectionViewControllerDelegate?
+    
     var dataSource: DataSource!
     
     var availableFontsStorage = IPAvailableFontsStorage()
@@ -44,13 +46,23 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
     }
         
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // change current font
-        // Delegate can help, I believe
+
         let cell = collectionView.cellForItem(at: indexPath)!
         
         cell.layer.cornerRadius = 10
         cell.layer.borderWidth = 2
         cell.layer.borderColor = UIColor.black.cgColor
+        
+        let index = indexPath.item
+        
+        if index < availableFontsStorage.availableFonts.count {
+            
+            let chosenFont = availableFontsStorage.availableFonts[index]
+            
+            delegate?.availableFontsCollectionViewController(chooseFont: chosenFont)
+            
+        }
+        
     }
     
     // MARK: - Helper methods
