@@ -7,7 +7,7 @@
 
 import UIKit
 //MARK: IMPORTANT TASKS
-//TODO: Create custom Tool Bar that conforms to UICollectionViewController and add a couple of buttons there
+
 class IPMapViewController: UIViewController {
     
     //TODO: Maybe put that stuff to the separate class
@@ -251,7 +251,7 @@ extension IPMapViewController {
         
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
                                   textContainer: locaTextContainer)
-        //TODO: Instead of subclassing toolbar class, create your own inputAccessoryView
+       
         textView.inputAccessoryView = toolbar
         
         textView.backgroundColor = .clear

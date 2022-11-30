@@ -39,15 +39,9 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         collectionView.register(IPAvailableFontCollectionViewCell.self,
                                 forCellWithReuseIdentifier: IPAvailableFontCollectionViewCell.reuseIdentifier)
         
-        collectionView.setCollectionViewLayout(createPreLayout(), animated: true)
+        collectionView.setCollectionViewLayout(createLayout(), animated: true)
         
     }
-    
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-
-            collectionView.setCollectionViewLayout(createLayout(), animated: true)
-        }
         
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // change current font
@@ -55,44 +49,25 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         let cell = collectionView.cellForItem(at: indexPath)!
         
         cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 2
         cell.layer.borderColor = UIColor.black.cgColor
     }
     
     // MARK: - Helper methods
-    
-    func createPreLayout() -> UICollectionViewLayout {
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
-        
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        
-        section.orthogonalScrollingBehavior = .paging
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        
-        
-        
-        return layout
-    }
-    
     func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(70), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+    
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
         let section = NSCollectionLayoutSection(group: group)
         
         section.orthogonalScrollingBehavior = .continuous
+        
+        section.interGroupSpacing = 15
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
@@ -108,7 +83,7 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
             
             cell.configure(withItem: item)
             cell.layer.cornerRadius = 10
-
+            
             return cell
         })
         

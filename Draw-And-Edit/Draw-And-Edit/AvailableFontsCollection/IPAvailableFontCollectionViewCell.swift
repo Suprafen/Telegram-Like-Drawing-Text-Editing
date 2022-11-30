@@ -14,7 +14,6 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
     let label: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
         label.textAlignment = .center
-        label.backgroundColor = .systemOrange
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
