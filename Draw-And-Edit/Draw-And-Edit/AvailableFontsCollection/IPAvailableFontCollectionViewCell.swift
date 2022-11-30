@@ -23,12 +23,15 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(label)
+        label.allowsDefaultTighteningForTruncation = false
+        
+        self.contentView.addSubview(label)
+        
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
         ])
        
     }
@@ -38,18 +41,18 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(withItem item: IPFont) {
-        print("Configure called!")
-        var attributes: [NSAttributedString.Key : Any] = [.font : item.font ?? UIFont(name: "HelveticaNeue-Medium", size: 20)!, .foregroundColor : UIColor.black]
-//
-        let attributedString = NSAttributedString(string: "Font Name", attributes: attributes)
+        
+        let attributes: [NSAttributedString.Key : Any] = [.font : item.font ?? UIFont(name: "HelveticaNeue-Medium", size: 20)!, .foregroundColor : UIColor.black]
+
+        let attributedString = NSAttributedString(string: item.font?.fontName ?? "Font Name", attributes: attributes)
         
         label.attributedText = attributedString
-//        localTextStorage.setAttributedString(attributedString)
+        
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        
-//        label.attributedText = nil
-//    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        label.attributedText = nil
+    }
 }

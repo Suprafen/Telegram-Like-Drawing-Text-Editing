@@ -220,7 +220,7 @@ extension IPMapViewController {
 //MARK: - Selectors
 extension IPMapViewController {
     @objc func addNewTextView() {
-        print("addNewTextView called")
+        
         helperViewsHidden = false
         
         let locaTextContainer: NSTextContainer = {

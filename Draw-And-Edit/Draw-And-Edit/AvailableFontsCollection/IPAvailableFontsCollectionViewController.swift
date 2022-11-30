@@ -39,26 +39,37 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         collectionView.register(IPAvailableFontCollectionViewCell.self,
                                 forCellWithReuseIdentifier: IPAvailableFontCollectionViewCell.reuseIdentifier)
         
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        collectionView.setCollectionViewLayout(createPreLayout(), animated: true)
         
     }
     
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+
+            collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        }
+        
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // change current font
         // Delegate can help, I believe
+        let cell = collectionView.cellForItem(at: indexPath)!
+        
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.black.cgColor
     }
     
     // MARK: - Helper methods
     
-    func createLayout() -> UICollectionViewLayout {
+    func createPreLayout() -> UICollectionViewLayout {
         
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(1))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
+
         let section = NSCollectionLayoutSection(group: group)
         
         section.orthogonalScrollingBehavior = .paging
@@ -70,17 +81,34 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         return layout
     }
     
+    func createLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(70), heightDimension: .fractionalHeight(1))
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.orthogonalScrollingBehavior = .continuous
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        
+        return layout
+    }
+    
+
     func configureDataSource() {
         dataSource = .init(collectionView: collectionView, cellProvider: {
             
             collectionView, indexPath, item -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IPAvailableFontCollectionViewCell.reuseIdentifier, for: indexPath) as! IPAvailableFontCollectionViewCell
             
-            
-            
             cell.configure(withItem: item)
             cell.layer.cornerRadius = 10
-            print("Cell \(cell)")
+
             return cell
         })
         
