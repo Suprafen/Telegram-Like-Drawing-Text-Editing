@@ -297,29 +297,64 @@ extension IPMapViewController {
     }
     
     @objc func fillChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView else { return }
-        
-        var attributes: [NSAttributedString.Key : Any] = [.font : UIFont(name: "HelveticaNeue-Medium", size: 20)!]
+        guard let activeTextView = view.firstResponder as? IPTextView/*,
+              let currentText = activeTextView.text*/ else { return }
         
         appStateController.changeFilledState()
+        
+//        let currentTextStorage = activeTextView.textStorage
+        
+//        guard let range = currentText.range(of: currentText) else {
+//            print("Range's fucked up")
+//            return
+//        }
+        
+//        let convertedRange = NSRange(range, in: currentText)
+        
+        
+        guard let attributedText = activeTextView.attributedText else {
+            print("attributedText's fucked up!")
+            return
+        }
+        
+        var attributes = attributedText.attributes(at: 0, effectiveRange: nil)
+        
         
         switch appStateController.filledAs {
             
         case .normal:
             
-            break
             
+            attributes[.backgroundColor] = UIColor.clear
+            attributes[.foregroundColor] = UIColor.black
+            attributes[.strokeWidth] = 0
+            attributes[.strokeColor] = UIColor.clear
+            
+
         case .fill:
             
+//            currentTextStorage.addAttributes([.backgroundColor : UIColor.black,
+//                                              .foregroundColor : UIColor.white],
+//                                             range: convertedRange)
+//
             attributes[.backgroundColor] = UIColor.black
             attributes[.foregroundColor] = UIColor.white
             
         case .fifthFill:
-            
+//            currentTextStorage.addAttributes([.backgroundColor : UIColor.black.withAlphaComponent(0.2),
+//                                              .foregroundColor : UIColor.white],
+//                                             range: convertedRange)
+//
             attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0.2)
             attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
+            
+//            currentTextStorage.addAttributes([.backgroundColor : UIColor.clear,
+//                                              .foregroundColor : UIColor.white,
+//                                              .strokeColor: UIColor.black,
+//                                              .strokeWidth  : 3],
+//                                             range: convertedRange)
             
             attributes[.backgroundColor] = UIColor.clear
             attributes[.foregroundColor] = UIColor.white
@@ -329,9 +364,9 @@ extension IPMapViewController {
         }
 
         let currentTextViewTextStorage = activeTextView.textStorage
-        
+
         let attributedString = NSAttributedString(string: currentTextViewTextStorage.string, attributes: attributes)
-        
+
         currentTextViewTextStorage.setAttributedString(attributedString)
         
         activeTextView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
