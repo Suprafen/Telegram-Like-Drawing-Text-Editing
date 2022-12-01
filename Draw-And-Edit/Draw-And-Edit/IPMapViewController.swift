@@ -250,6 +250,8 @@ extension IPMapViewController {
             return textStorage
         }()
               
+        localLayoutManager.delegate = self
+        
         localLayoutManager.addTextContainer(locaTextContainer)
         localTextStorage.addLayoutManager(localLayoutManager)
         
@@ -447,4 +449,18 @@ extension IPMapViewController: UITextViewDelegate {
         
         previousAttributedText = textView.attributedText
     }
+}
+
+//MARK: - NSLayoutManagerDelegate conformance
+
+extension IPMapViewController: NSLayoutManagerDelegate {
+    
+    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 10.0
+    }
+    
+    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 10.0
+    }
+    
 }
