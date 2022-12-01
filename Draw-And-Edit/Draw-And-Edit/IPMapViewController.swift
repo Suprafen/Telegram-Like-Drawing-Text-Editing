@@ -402,14 +402,14 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
         guard let activeTextView = view.firstResponder as? IPTextView,
               let chosenFont = chosenFont.font,
               let currentText = activeTextView.text else {
-            print("1st responder, chosen font or current text has fucked up!")
+            print("1st responder, chosen font or current text has fucked up! - availableFontsCollectionViewController")
             return
         }
         
         let currentTextStorage = activeTextView.textStorage
         
         guard let range = currentText.range(of: currentText) else {
-            print("Range's fucked up")
+            print("Range's fucked up -availableFontsCollectionViewController")
             return
         }
         
@@ -425,7 +425,8 @@ extension IPMapViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         guard let currentText = textView.text,
-        let currentAttributedText = textView.attributedText else {
+              !currentText.isEmpty,
+              let currentAttributedText = textView.attributedText else {
             previousAttributedText = textView.attributedText
             return
         }
@@ -436,7 +437,7 @@ extension IPMapViewController: UITextViewDelegate {
         
         
         guard let range = currentText.range(of: currentText) else {
-            print("Range's fucked up")
+            print("Range's fucked up - textViewDidChange")
             return
         }
         
