@@ -24,6 +24,7 @@
 		E2A6FF4F292A865800C72421 /* IPFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF4E292A865800C72421 /* IPFontExtension.swift */; };
 		E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */; };
 		E2F4B3F329380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */; };
+		E2F6E4042939528D00E65DAB /* IPNSLayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F6E4032939528D00E65DAB /* IPNSLayoutManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		E2A6FF4E292A865800C72421 /* IPFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPFontExtension.swift; sourceTree = "<group>"; };
 		E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveUIViewControllerExtension.swift; sourceTree = "<group>"; };
 		E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAvailableFontsCollectionViewControllerDelegate.swift; sourceTree = "<group>"; };
+		E2F6E4032939528D00E65DAB /* IPNSLayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPNSLayoutManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +64,8 @@
 		E20CCE112914435400020C22 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				E20CCE122914436800020C22 /* IPUIViewExtension.swift */,
-				E25BE84429298BB100854E53 /* IPTextFillState.swift */,
-				E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */,
-				E2A6FF4E292A865800C72421 /* IPFontExtension.swift */,
-				E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */,
+				E2F6E406293952E700E65DAB /* Other */,
+				E2F6E405293952C800E65DAB /* TextEditing */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -100,9 +99,8 @@
 		E29FECBF291175BB00F6DDE5 /* Draw-And-Edit */ = {
 			isa = PBXGroup;
 			children = (
-				E27C448D29329F6B0024D7C6 /* AvailableFontsCollection */,
+				E2F6E401293951FD00E65DAB /* TextEditing */,
 				E20CCE112914435400020C22 /* Library */,
-				E29FECD52911786300F6DDE5 /* TextView */,
 				E29FECD42911785500F6DDE5 /* Application */,
 				E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */,
 				E29FECC9291175BC00F6DDE5 /* Assets.xcassets */,
@@ -130,6 +128,43 @@
 				E29FECD62911789400F6DDE5 /* IPTextView.swift */,
 			);
 			path = TextView;
+			sourceTree = "<group>";
+		};
+		E2F6E401293951FD00E65DAB /* TextEditing */ = {
+			isa = PBXGroup;
+			children = (
+				E2F6E4022939526400E65DAB /* TextEditingManagers */,
+				E29FECD52911786300F6DDE5 /* TextView */,
+				E27C448D29329F6B0024D7C6 /* AvailableFontsCollection */,
+			);
+			path = TextEditing;
+			sourceTree = "<group>";
+		};
+		E2F6E4022939526400E65DAB /* TextEditingManagers */ = {
+			isa = PBXGroup;
+			children = (
+				E2F6E4032939528D00E65DAB /* IPNSLayoutManager.swift */,
+			);
+			path = TextEditingManagers;
+			sourceTree = "<group>";
+		};
+		E2F6E405293952C800E65DAB /* TextEditing */ = {
+			isa = PBXGroup;
+			children = (
+				E25BE84429298BB100854E53 /* IPTextFillState.swift */,
+				E2A6FF4E292A865800C72421 /* IPFontExtension.swift */,
+				E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */,
+			);
+			path = TextEditing;
+			sourceTree = "<group>";
+		};
+		E2F6E406293952E700E65DAB /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				E20CCE122914436800020C22 /* IPUIViewExtension.swift */,
+				E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +242,7 @@
 				E2A6FF4D292A84FC00C72421 /* IPAvailableFontsStorage.swift in Sources */,
 				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
 				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,
+				E2F6E4042939528D00E65DAB /* IPNSLayoutManager.swift in Sources */,
 				E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */,
 				E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */,
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
