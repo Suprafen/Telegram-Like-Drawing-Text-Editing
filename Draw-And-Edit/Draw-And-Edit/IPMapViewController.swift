@@ -7,6 +7,14 @@
 
 import UIKit
 //MARK: IMPORTANT TASKS
+// From the most to the least important
+
+// TODO: Figure out, how to ignore new line element and not fill it out
+// TODO: How to make filling follow only words
+// TODO: How to make corners of filling rounded
+
+// TODO: Add a slider that manages font size
+
 // TODO: Refactor code that responsible for setting attributes to a text. In filling. Same as for IPCollection View protocol. I mean with help of range.
 class IPMapViewController: UIViewController {
     
@@ -235,8 +243,8 @@ extension IPMapViewController {
             return textContainer
         }()
         
-        let localLayoutManager: NSLayoutManager = {
-            let layoutManager = NSLayoutManager()
+        let localLayoutManager: IPNSLayoutManager = {
+            let layoutManager = IPNSLayoutManager()
             
             return layoutManager
         }()
@@ -455,12 +463,12 @@ extension IPMapViewController: UITextViewDelegate {
 
 extension IPMapViewController: NSLayoutManagerDelegate {
     
-    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 10.0
-    }
+//    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+//        return 10.0
+//    }
     
-    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 10.0
-    }
+//    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+//        return 10.0
+//    }
     
 }
