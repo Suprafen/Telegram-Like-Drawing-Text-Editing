@@ -113,6 +113,8 @@ class IPMapViewController: UIViewController {
     }()
     // MARK: - Stored properties
     
+    var previousAttributedText: NSAttributedString?
+    
     let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
     
     var helperViewsHidden: Bool = true {
@@ -258,21 +260,17 @@ extension IPMapViewController {
         
         textView.backgroundColor = .clear
         textView.layer.borderWidth = 1
-        textView.autocorrectionType = .no
+        
         // This line removes suggested words above the keyboard
+        // Sometimes this stuff is occuring....
         textView.spellCheckingType = .no
+        textView.autocorrectionType = .no
+        
+        textView.delegate = self
+        
         view.addSubview(textView)
         textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
         textView.center = view.center
-    }
-    
-    @objc func addCALayer() {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor.gray.withAlphaComponent(0.7).cgColor
-        layer.frame = view.frame
-        
-        
-        view.layer.addSublayer(layer)
     }
     
     @objc func doneButtonTapped() {
@@ -418,5 +416,34 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
         let convertedRange = NSRange(range, in: currentText)
         
         currentTextStorage.addAttributes([.font : chosenFont], range: convertedRange)
+    }
+}
+
+// MARK: - UITextViewDelegate conformance
+
+extension IPMapViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        guard let currentText = textView.text,
+        let currentAttributedText = textView.attributedText else {
+            previousAttributedText = textView.attributedText
+            return
+        }
+        
+        let attributes = currentAttributedText.attributes(at: 0, effectiveRange: nil)
+        
+        let currentTextStorage = textView.textStorage
+        
+        
+        guard let range = currentText.range(of: currentText) else {
+            print("Range's fucked up")
+            return
+        }
+        
+        let convertedRange = NSRange(range, in: currentText)
+        
+        currentTextStorage.setAttributes(attributes, range: convertedRange)
+        
+        previousAttributedText = textView.attributedText
     }
 }
