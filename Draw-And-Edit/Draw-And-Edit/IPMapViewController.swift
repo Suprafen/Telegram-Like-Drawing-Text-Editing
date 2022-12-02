@@ -249,11 +249,14 @@ extension IPMapViewController {
             return layoutManager
         }()
         
-        let localTextStorage: NSTextStorage = {
+        let localTextStorage: IPNSTextStorage = {
             let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
             
             let mutAttrStr = NSMutableAttributedString(attributedString: attrStr)
-            let textStorage = NSTextStorage(attributedString: mutAttrStr)
+            let textStorage = IPNSTextStorage()
+////            let textStorage = NSTextStorage(attributedString: mutAttrStr)
+            
+            textStorage.replaceCharacters(in: NSRange(location: 0, length: 0), with: attrStr)
             
             return textStorage
         }()
@@ -455,6 +458,8 @@ extension IPMapViewController: UITextViewDelegate {
         
         currentTextStorage.setAttributes(attributes, range: convertedRange)
         
+//        currentTextStorage.replaceCharacters(in: NSRange(location: 0, length: 0), with: textView.attributedText)
+//
         previousAttributedText = textView.attributedText
     }
 }

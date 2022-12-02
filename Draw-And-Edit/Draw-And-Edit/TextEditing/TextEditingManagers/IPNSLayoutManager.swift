@@ -23,14 +23,20 @@ class IPNSLayoutManager: NSLayoutManager {
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
         
-        self.enumerateLineFragments(forGlyphRange: glyphsToShow) { rect, usedRect, textContainer, range, stop in
-            
-            let currentContext = UIGraphicsGetCurrentContext()
-            currentContext?.saveGState()
-            
-            currentContext?.setFillColor(UIColor.black.cgColor)
-            currentContext?.restoreGState()
+        self.enumerateLineFragments(forGlyphRange: glyphsToShow) { (rect, usedRect, textContainer, glyphRange, stop) in
 
+                   var lineRect = usedRect
+                   lineRect.size.height = 30.0
+
+                   let currentContext = UIGraphicsGetCurrentContext()
+                   currentContext?.saveGState()
+
+                   currentContext?.setStrokeColor(UIColor.red.cgColor)
+                   currentContext?.setLineWidth(1.0)
+                   currentContext?.stroke(lineRect)
+
+                   currentContext?.restoreGState()
+            
         }
     }
 }
