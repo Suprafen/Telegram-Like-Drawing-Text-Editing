@@ -95,6 +95,8 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
             
             cell.configure(withItem: item)
             cell.layer.cornerRadius = 10
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = UIColor.systemGray.withAlphaComponent(0.7).cgColor
             
             return cell
         })
