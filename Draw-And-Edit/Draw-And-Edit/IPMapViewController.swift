@@ -272,7 +272,6 @@ extension IPMapViewController {
         textView.inputAccessoryView = toolbar
         
         textView.backgroundColor = .clear
-        textView.layer.borderWidth = 1
         
         // This line removes suggested words above the keyboard
         // Sometimes this stuff is occuring....
@@ -468,12 +467,12 @@ extension IPMapViewController: UITextViewDelegate {
 
 extension IPMapViewController: NSLayoutManagerDelegate {
     
-//    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-//        return 10.0
-//    }
+    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 10.0
+    }
     
-//    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-//        return 10.0
-//    }
+    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+        return 10.0
+    }
     
 }

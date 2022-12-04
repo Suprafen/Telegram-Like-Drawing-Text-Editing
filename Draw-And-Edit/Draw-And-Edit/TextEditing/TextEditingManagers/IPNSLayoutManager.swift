@@ -16,27 +16,31 @@ class IPNSLayoutManager: NSLayoutManager {
         super.init()
     }
     
+    var path: UIBezierPath? = UIBezierPath()
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
+   
+        let range = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
         
-        self.enumerateLineFragments(forGlyphRange: glyphsToShow) { (rect, usedRect, textContainer, glyphRange, stop) in
-
-                   var lineRect = usedRect
-                   lineRect.size.height = 30.0
-
-                   let currentContext = UIGraphicsGetCurrentContext()
-                   currentContext?.saveGState()
-
-                   currentContext?.setStrokeColor(UIColor.red.cgColor)
-                   currentContext?.setLineWidth(1.0)
-                   currentContext?.stroke(lineRect)
-
-                   currentContext?.restoreGState()
-            
+        let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
+        
+        UIColor.systemOrange.setFill()
+        UIColor.systemOrange.setStroke()
+        
+        let context = UIGraphicsGetCurrentContext()
+        context?.saveGState()
+        context?.translateBy(x: origin.x, y: origin.y)
+        
+        self.enumerateLineFragments(forGlyphRange: glyphRange) { rect, usedRect, textContainer, glyphRange, stop in
+            self.path?.append(UIBezierPath(roundedRect: usedRect, cornerRadius: 8))
         }
+        context?.restoreGState()
+        self.path?.stroke()
+        self.path?.fill()
     }
 }
