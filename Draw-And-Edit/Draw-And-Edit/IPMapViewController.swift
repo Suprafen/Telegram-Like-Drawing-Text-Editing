@@ -119,6 +119,17 @@ class IPMapViewController: UIViewController {
         
         return button
     }()
+    
+    let fontSizeSlider: UISlider = {
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: CGFloat(200), height: CGFloat(25)))
+        slider.minimumValue = 15
+        slider.value = 20
+        slider.maximumValue = 40
+        slider.isHidden = true
+        slider.addTarget(nil, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+
+        return slider
+    }()
     // MARK: - Stored properties
     
     var previousAttributedText: NSAttributedString?
@@ -130,6 +141,7 @@ class IPMapViewController: UIViewController {
             
             doneButton.isHidden = newValue
             cancelButton.isHidden = newValue
+            fontSizeSlider.isHidden = newValue
             backgroundDarknerView.isHidden = newValue
             
         }
@@ -193,6 +205,15 @@ class IPMapViewController: UIViewController {
         self.view.addSubview(backgroundDarknerView)
         self.view.addSubview(doneButton)
         self.view.addSubview(cancelButton)
+        self.view.addSubview(fontSizeSlider)
+        
+        // Center location for font size slider
+        // default value
+        fontSizeSlider.center = CGPoint(x: 0, y: (view.frame.minY + view.frame.maxY) / 2)
+        // The value when pangesture is active
+//        sender.center = CGPoint(x: 20, y: (view.frame.minY + view.frame.maxY) / 2)
+        fontSizeSlider.transform = CGAffineTransform(rotationAngle: (.pi * 3) / 2)
+        
         
         NSLayoutConstraint.activate([
             backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -402,6 +423,45 @@ extension IPMapViewController {
             activeTextView.textAlignment = .right
             
         }
+    }
+    
+    @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
+        print("fontSizeSliderValueChanged")
+        // TODO: Fix this awfulness
+        // Make a property instead and wake layout manager to do the job
+        
+        guard let activeTextView = view.firstResponder as? IPTextView,
+              let currentText = activeTextView.text else {
+            print("1st responder, chosen font or current text has fucked up! - availableFontsCollectionViewController")
+            return
+        }
+        
+        let currentTextStorage = activeTextView.textStorage
+        
+        guard let range = currentText.range(of: currentText) else {
+            print("Range's fucked up -availableFontsCollectionViewController")
+            return
+        }
+        
+        let convertedRange = NSRange(range, in: currentText)
+        
+        let attributes = currentTextStorage.attributes(at: 0, effectiveRange: nil)
+        
+        guard var font = attributes[.font] as? UIFont else {
+            print("Getting font fucked up!")
+            return
+        }
+        
+        let step: Float = 1
+        
+        let roundedValue = round(sender.value * step) / step
+        sender.value = roundedValue
+        
+        let fontSize = sender.value
+        font = font.withSize(CGFloat(fontSize))
+        
+        currentTextStorage.addAttributes([.font : font], range: convertedRange)
+         
     }
 }
 
