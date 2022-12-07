@@ -16,8 +16,6 @@ class IPNSLayoutManager: NSLayoutManager {
         super.init()
     }
     
-    var path: UIBezierPath? = UIBezierPath()
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -30,17 +28,21 @@ class IPNSLayoutManager: NSLayoutManager {
         let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
         
         UIColor.systemOrange.setFill()
-        UIColor.systemOrange.setStroke()
         
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
         context?.translateBy(x: origin.x, y: origin.y)
         
         self.enumerateLineFragments(forGlyphRange: glyphRange) { rect, usedRect, textContainer, glyphRange, stop in
-            self.path?.append(UIBezierPath(roundedRect: usedRect, cornerRadius: 8))
+            context?.addPath(UIBezierPath(roundedRect: usedRect, cornerRadius: 7).cgPath)
+            
+            context?.setFillColor(UIColor.red.cgColor)
+            context?.setStrokeColor(UIColor.red.cgColor)
+            context?.fillPath(using: .evenOdd)
+            
+            context?.strokePath()
+            
         }
         context?.restoreGState()
-        self.path?.stroke()
-        self.path?.fill()
     }
 }

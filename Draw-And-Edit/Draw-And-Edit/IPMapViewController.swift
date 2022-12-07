@@ -195,7 +195,7 @@ class IPMapViewController: UIViewController {
             fillChangeButton.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5),
             
             collectionController.collectionView.topAnchor.constraint(equalTo: toolbar.topAnchor, constant: 5),
-            collectionController.collectionView.leadingAnchor.constraint(equalTo: fillChangeButton.trailingAnchor, constant: 90),
+            collectionController.collectionView.leadingAnchor.constraint(equalTo: fillChangeButton.trailingAnchor, constant: 15),
             collectionController.collectionView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor, constant: -5),
             collectionController.collectionView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor, constant: -5)
         ])
@@ -273,9 +273,7 @@ extension IPMapViewController {
         let localTextStorage: IPNSTextStorage = {
             let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
             
-            let mutAttrStr = NSMutableAttributedString(attributedString: attrStr)
             let textStorage = IPNSTextStorage()
-////            let textStorage = NSTextStorage(attributedString: mutAttrStr)
             
             textStorage.replaceCharacters(in: NSRange(location: 0, length: 0), with: attrStr)
             
@@ -426,13 +424,12 @@ extension IPMapViewController {
     }
     
     @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
-        print("fontSizeSliderValueChanged")
         // TODO: Fix this awfulness
         // Make a property instead and wake layout manager to do the job
         
         guard let activeTextView = view.firstResponder as? IPTextView,
               let currentText = activeTextView.text else {
-            print("1st responder, chosen font or current text has fucked up! - availableFontsCollectionViewController")
+            print("1st responder or current text has fucked up! - fontSizeSliderValueChanged")
             return
         }
         
@@ -517,8 +514,6 @@ extension IPMapViewController: UITextViewDelegate {
         
         currentTextStorage.setAttributes(attributes, range: convertedRange)
         
-//        currentTextStorage.replaceCharacters(in: NSRange(location: 0, length: 0), with: textView.attributedText)
-//
         previousAttributedText = textView.attributedText
     }
 }
