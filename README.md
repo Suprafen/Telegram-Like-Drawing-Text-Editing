@@ -13,7 +13,7 @@ This is a Telegram-like drawing and text editing app module which was a task for
  ## Current tasks: 
  
 - [X] To make a background for text view to become nice. Without the background duplication.
-   - [ ] To make a background seen as one area with rounded rectangles at each intersection.
+   - [ ] To make a background seen as one area with rounded corners at each intersection.
 - [ ] Substitute default slider with custom view as Telegram’s video sample shows.
 - [ ] Refactor existing code that’s used to set filling. Move it to NSLayoutManager
 - [ ] Use provided by Telegram icons for buttons and make them change icons dynamically.
