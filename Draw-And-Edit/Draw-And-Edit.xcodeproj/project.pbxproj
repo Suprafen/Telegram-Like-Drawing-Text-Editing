@@ -11,6 +11,7 @@
 		E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84429298BB100854E53 /* IPTextFillState.swift */; };
 		E25BE84729298C0400854E53 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84629298C0400854E53 /* AppStateController.swift */; };
 		E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */; };
+		E28F792C29439C9A00754C46 /* IPSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28F792B29439C9A00754C46 /* IPSliderView.swift */; };
 		E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */; };
 		E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */; };
 		E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */; };
@@ -33,6 +34,7 @@
 		E25BE84429298BB100854E53 /* IPTextFillState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextFillState.swift; sourceTree = "<group>"; };
 		E25BE84629298C0400854E53 /* AppStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextAlignmentState.swift; sourceTree = "<group>"; };
+		E28F792B29439C9A00754C46 /* IPSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPSliderView.swift; sourceTree = "<group>"; };
 		E29FECBD291175BB00F6DDE5 /* Draw-And-Edit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Draw-And-Edit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 		E20CCE112914435400020C22 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				E28F792A29439C6800754C46 /* ReusingElements */,
 				E2F6E406293952E700E65DAB /* Other */,
 				E2F6E405293952C800E65DAB /* TextEditing */,
 			);
@@ -80,6 +83,14 @@
 				E2F4B3F229380DB7002E5EA5 /* IPAvailableFontsCollectionViewControllerDelegate.swift */,
 			);
 			path = AvailableFontsCollection;
+			sourceTree = "<group>";
+		};
+		E28F792A29439C6800754C46 /* ReusingElements */ = {
+			isa = PBXGroup;
+			children = (
+				E28F792B29439C9A00754C46 /* IPSliderView.swift */,
+			);
+			path = ReusingElements;
 			sourceTree = "<group>";
 		};
 		E29FECB4291175BA00F6DDE5 = {
@@ -242,6 +253,7 @@
 			files = (
 				E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */,
 				E2A6FF4F292A865800C72421 /* IPFontExtension.swift in Sources */,
+				E28F792C29439C9A00754C46 /* IPSliderView.swift in Sources */,
 				E2A6FF4D292A84FC00C72421 /* IPAvailableFontsStorage.swift in Sources */,
 				E29FECD72911789400F6DDE5 /* IPTextView.swift in Sources */,
 				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,

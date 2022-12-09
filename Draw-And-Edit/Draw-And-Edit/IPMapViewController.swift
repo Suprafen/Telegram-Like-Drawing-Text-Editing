@@ -9,11 +9,7 @@ import UIKit
 //MARK: IMPORTANT TASKS
 // From the most to the least important
 
-// TODO: Figure out, how to ignore new line element and not fill it out
-// TODO: How to make filling follow only words
 // TODO: How to make corners of filling rounded
-
-// TODO: Add a slider that manages font size
 
 // TODO: Refactor code that responsible for setting attributes to a text. In filling. Same as for IPCollection View protocol. I mean with help of range.
 class IPMapViewController: UIViewController {
@@ -120,8 +116,8 @@ class IPMapViewController: UIViewController {
         return button
     }()
     
-    let fontSizeSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: CGFloat(200), height: CGFloat(25)))
+    let fontSizeSlider: IPSliderView = {
+        let slider = IPSliderView(frame: CGRect(x: 0, y: 0, width: CGFloat(200), height: CGFloat(25)))
         slider.minimumValue = 15
         slider.value = 20
         slider.maximumValue = 40
@@ -130,6 +126,7 @@ class IPMapViewController: UIViewController {
 
         return slider
     }()
+    
     // MARK: - Stored properties
     
     var previousAttributedText: NSAttributedString?
