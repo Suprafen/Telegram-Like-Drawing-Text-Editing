@@ -12,6 +12,15 @@ import UIKit
 
 class IPSliderView: UISlider {
     
+    private let thumbView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.borderWidth = 0.4
+        view.layer.borderColor = UIColor.darkGray.cgColor
+        
+        return view
+    }()
+    
     private let baseLayer = CAShapeLayer()
     
     var sFrame: CGRect
@@ -35,7 +44,10 @@ class IPSliderView: UISlider {
     private func setup() {
         clear()
         buildBaseLayer()
-        createThumbImageView()
+        
+        let thumb = thumbImage(radius: 25)
+        setThumbImage(thumb, for: .normal)
+        setThumbImage(thumb, for: .highlighted)
     }
     
     private func clear() {
@@ -56,54 +68,17 @@ class IPSliderView: UISlider {
         layer.insertSublayer(baseLayer, at: 0)
     }
     
-    private func createThumbImageView() {
-        let thumbSize = (3 * frame.height) / 4
-        let thumbView = ThumbView(frame: .init(x: 0,
-                                               y: 0,
-                                               width: thumbSize,
-                                               height: thumbSize))
-        thumbView.layer.cornerRadius = thumbSize / 2
-        let thumbSnapshot = thumbView.snapshot
-        setThumbImage(thumbSnapshot, for: .normal)
-    }
-}
-
-
-final class ThumbView: UIView {
- 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
- 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
- 
-    private func setup() {
+    private func thumbImage(radius: CGFloat) -> UIImage {
+        // Set proper frame
+        // y: radius / 2 will correctly offset the thumb
         
-        let dimension: CGFloat = 12
+        thumbView.frame = CGRect(x: 0, y: radius / 2,
+                                 width: radius, height: radius)
+        thumbView.layer.cornerRadius = radius / 2
         
-        let middleView = UIView(frame: .init(x: frame.midX - 6,
-                                             y: frame.midY - 6,
-                                             width: dimension,
-                                             height: dimension))
-
-        middleView.backgroundColor = .white
-        middleView.layer.cornerRadius = dimension / 2
+        // Convert thumbView to UIImage
+        // See this: https://stackoverflow.com/a/41288197/7235585
         
-        addSubview(middleView)
-    }
-}
-
-extension UIView {
- 
-    var snapshot: UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        let capturedImage = renderer.image { context in
-            layer.render(in: context.cgContext)
-        }
-        return capturedImage
+        return thumbView.snapshot
     }
 }
