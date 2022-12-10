@@ -117,7 +117,13 @@ class IPMapViewController: UIViewController {
     }()
     
     let fontSizeSlider: IPSliderView = {
-        let slider = IPSliderView(frame: CGRect(x: 0, y: 0, width: CGFloat(200), height: CGFloat(25)))
+        
+        let dimension = widthToDimensions(30)
+        
+        let slider = IPSliderView(frame: CGRect(x: 0, y: 0,
+                                                width: dimension.width,
+                                                height: dimension.height))
+        
         slider.minimumValue = 15
         slider.value = 20
         slider.maximumValue = 40
@@ -125,6 +131,7 @@ class IPMapViewController: UIViewController {
         slider.addTarget(nil, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
 
         return slider
+        
     }()
     
     // MARK: - Stored properties
