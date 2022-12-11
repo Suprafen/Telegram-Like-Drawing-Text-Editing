@@ -473,7 +473,7 @@ extension IPMapViewController {
 extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate {
     
     func availableFontsCollectionViewController(chooseFont chosenFont: IPFont) {
-        
+        // TODO: Refactor this mess...
         guard let activeTextView = view.firstResponder as? IPTextView,
               let chosenFont = chosenFont.font,
               let currentText = activeTextView.text else {
@@ -488,9 +488,15 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
             return
         }
         
+        let attr = currentTextStorage.attributes(at: 0, effectiveRange: nil)
+        
+        guard let currentFont = attr[.font] as? UIFont else { return }
+        
         let convertedRange = NSRange(range, in: currentText)
         
-        currentTextStorage.addAttributes([.font : chosenFont], range: convertedRange)
+        let fontToSet = chosenFont.withSize(currentFont.pointSize)
+        
+        currentTextStorage.addAttributes([.font : fontToSet], range: convertedRange)
     }
 }
 
