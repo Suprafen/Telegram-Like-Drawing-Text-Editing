@@ -8,15 +8,13 @@
 import Foundation
 import UIKit
 
-// TODO: Add probably a bezier path to get right shape of the slider
-
 class IPSliderView: UISlider {
     
     private let thumbView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.borderWidth = 4
-        view.layer.borderColor = UIColor.darkGray.cgColor
+        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.backgroundColor = UIColor.white.cgColor
         
         return view
     }()
@@ -58,11 +56,10 @@ class IPSliderView: UISlider {
       }
     
     private func buildBaseLayer() {
-        baseLayer.fillColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
-        baseLayer.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7).cgColor
+        baseLayer.fillColor = UIColor.lightGray.cgColor
         baseLayer.path = createBackground(rect: sFrame).cgPath
         
-        layer.addSublayer(baseLayer)
+        layer.insertSublayer(baseLayer, at: 0)
     }
     
     private func thumbImage(radius: CGFloat) -> UIImage {
@@ -122,14 +119,8 @@ class IPSliderView: UISlider {
 
         path.close()
         
-        UIColor.black.setFill()
-        
-        UIColor.black.setStroke()
-        
         path.fill()
-        
-        path.stroke()
-        
+
         return path
     }
 }

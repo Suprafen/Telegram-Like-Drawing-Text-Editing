@@ -9,9 +9,6 @@ import UIKit
 //MARK: IMPORTANT TASKS
 // From the most to the least important
 
-// TODO: How to make corners of filling rounded
-
-// TODO: Refactor code that responsible for setting attributes to a text. In filling. Same as for IPCollection View protocol. I mean with help of range.
 class IPMapViewController: UIViewController {
     
     //TODO: Maybe put that stuff to the separate class
@@ -158,8 +155,22 @@ class IPMapViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        setupNotifications()
         addDarknerAndHelperButtons()
         setupViews()
+    }
+    
+    func setupNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
+        
     }
     
     func setupViews() {
@@ -172,6 +183,7 @@ class IPMapViewController: UIViewController {
             addNewTextViewButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40)
         ])
     }
+    
     func setupToolbar() {
         toolbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         
@@ -213,7 +225,7 @@ class IPMapViewController: UIViewController {
         
         // Center location for font size slider
         // default value
-        fontSizeSlider.center = CGPoint(x: 0, y: (view.frame.minY + view.frame.maxY) / 2)
+        fontSizeSlider.frame.origin = CGPoint(x: -fontSizeSlider.sFrame.maxX, y: (view.frame.minY + view.frame.maxY) / 2)
         // The value when pangesture is active
 //        sender.center = CGPoint(x: 20, y: (view.frame.minY + view.frame.maxY) / 2)
         fontSizeSlider.transform = CGAffineTransform(rotationAngle: (.pi * 3) / 2)
@@ -254,7 +266,7 @@ extension IPMapViewController {
     }
 }
 
-//MARK: - Selectors
+// MARK: - Selectors
 extension IPMapViewController {
     @objc func addNewTextView() {
         
@@ -438,8 +450,24 @@ extension IPMapViewController {
         currentTextStorage.addAttributes([.font : font], range: convertedRange)
          
     }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let _ = keyboardRectangle.height // keyboard height
+            
+            let keyboardOrigin = keyboardRectangle.origin
+            
+            fontSizeSlider.center = CGPoint(x: 0, y: keyboardOrigin.y - fontSizeSlider.frame.minY / 2)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        let center = fontSizeSlider.center
+        fontSizeSlider.center = CGPoint(x: -fontSizeSlider.frame.maxY, y: center.y)
+    }
+    
 }
-
 
 // MARK: - IPAvailableFontsCollectionViewControllerDelegate conformance
 extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate {
@@ -496,7 +524,7 @@ extension IPMapViewController: UITextViewDelegate {
     }
 }
 
-//MARK: - NSLayoutManagerDelegate
+// MARK: - NSLayoutManagerDelegate
 
 extension IPMapViewController: NSLayoutManagerDelegate {
     
