@@ -102,7 +102,7 @@ class IPMapViewController: UIViewController {
     }()
     
     let fillChangeButton: UIButton = {
-        let image = UIImage(systemName: "a.square")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: "default")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
         
         let button = UIButton()
         button.setImage(image, for: .normal)
