@@ -90,7 +90,7 @@ class IPMapViewController: UIViewController {
     
     //MARK: - Text Editing Buttons.
     let alignmentChangeButton: UIButton = {
-        let image = UIImage(systemName: "text.aligncenter")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: "textLeft")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
 
         let button = UIButton()
         button.setImage(image, for: .normal)
@@ -352,11 +352,14 @@ extension IPMapViewController {
         
         var attributes = attributedText.attributes(at: 0, effectiveRange: nil)
         
+        let imageName: String
         
         switch appStateController.filledAs {
             
         case .normal:
-
+          
+            imageName = "default"
+            
             attributes.removeValue(forKey: .strokeColor)
             attributes.removeValue(forKey: .strokeWidth)
             
@@ -364,16 +367,22 @@ extension IPMapViewController {
             
         case .fill:
             
+            imageName = "filled"
+            
             attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .fifthFill:
+            
+            imageName = "semi"
             
             attributes[.backgroundColor] = UIColor.orange.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
             
+            imageName = "stroke"
+
             attributes.removeValue(forKey: .backgroundColor)
             
             attributes[.foregroundColor] = UIColor.white
@@ -381,6 +390,10 @@ extension IPMapViewController {
             attributes[.strokeWidth] = -3
             
         }
+
+        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        
+        fillChangeButton.setImage(image, for: .normal)
 
         let currentTextViewTextStorage = activeTextView.textStorage
 
@@ -396,21 +409,33 @@ extension IPMapViewController {
         
         appStateController.changeAlignmentState()
         
+        let imageName: String
+        
         switch appStateController.alignment {
             
         case .left:
+            
+            imageName = "textLeft"
             
             activeTextView.textAlignment = .left
             
         case .center:
             
+            imageName = "textCenter"
+            
             activeTextView.textAlignment = .center
             
         case .right:
             
+            imageName = "textRight"
+            
             activeTextView.textAlignment = .right
             
         }
+        
+        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+
+        alignmentChangeButton.setImage(image, for: .normal)
     }
     
     @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
