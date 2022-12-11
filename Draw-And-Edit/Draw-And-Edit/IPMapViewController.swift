@@ -330,21 +330,9 @@ extension IPMapViewController {
     }
     
     @objc func fillChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView/*,
-              let currentText = activeTextView.text*/ else { return }
+        guard let activeTextView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeFilledState()
-        
-//        let currentTextStorage = activeTextView.textStorage
-        
-//        guard let range = currentText.range(of: currentText) else {
-//            print("Range's fucked up")
-//            return
-//        }
-        
-//        let convertedRange = NSRange(range, in: currentText)
-        
-        
         guard let attributedText = activeTextView.attributedText else {
             print("attributedText's fucked up!")
             return
@@ -356,43 +344,29 @@ extension IPMapViewController {
         switch appStateController.filledAs {
             
         case .normal:
-            
-            
-            attributes[.backgroundColor] = UIColor.clear
-            attributes[.foregroundColor] = UIColor.black
-            attributes[.strokeWidth] = 0
-            attributes[.strokeColor] = UIColor.clear
-            
 
+            attributes.removeValue(forKey: .strokeColor)
+            attributes.removeValue(forKey: .strokeWidth)
+            
+            attributes[.foregroundColor] = UIColor.black
+            
         case .fill:
             
-//            currentTextStorage.addAttributes([.backgroundColor : UIColor.black,
-//                                              .foregroundColor : UIColor.white],
-//                                             range: convertedRange)
-//
-            attributes[.backgroundColor] = UIColor.black
+            attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .fifthFill:
-//            currentTextStorage.addAttributes([.backgroundColor : UIColor.black.withAlphaComponent(0.2),
-//                                              .foregroundColor : UIColor.white],
-//                                             range: convertedRange)
-//
-            attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0.2)
+            
+            attributes[.backgroundColor] = UIColor.orange.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
             
-//            currentTextStorage.addAttributes([.backgroundColor : UIColor.clear,
-//                                              .foregroundColor : UIColor.white,
-//                                              .strokeColor: UIColor.black,
-//                                              .strokeWidth  : 3],
-//                                             range: convertedRange)
+            attributes.removeValue(forKey: .backgroundColor)
             
-            attributes[.backgroundColor] = UIColor.clear
             attributes[.foregroundColor] = UIColor.white
             attributes[.strokeColor] = UIColor.black
-            attributes[.strokeWidth] = 3
+            attributes[.strokeWidth] = -3
             
         }
 
@@ -522,16 +496,16 @@ extension IPMapViewController: UITextViewDelegate {
     }
 }
 
-//MARK: - NSLayoutManagerDelegate conformance
+//MARK: - NSLayoutManagerDelegate
 
 extension IPMapViewController: NSLayoutManagerDelegate {
     
-    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 10.0
-    }
-    
-    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
-        return 10.0
-    }
-    
+//    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+//        return 10.0
+//    }
+//    
+//    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
+//        return 10.0
+//    }
+//    
 }

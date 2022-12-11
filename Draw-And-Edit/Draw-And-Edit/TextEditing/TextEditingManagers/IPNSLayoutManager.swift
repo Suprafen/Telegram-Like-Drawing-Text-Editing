@@ -22,12 +22,20 @@ class IPNSLayoutManager: NSLayoutManager {
     
     override func drawBackground(forGlyphRange glyphsToShow: NSRange, at origin: CGPoint) {
         super.drawBackground(forGlyphRange: glyphsToShow, at: origin)
-   
+        
+        guard let textStorage = textStorage else { return }
+        
+        let attributes = textStorage.attributes(at: 0, effectiveRange: nil)
+        
+        guard let backgroundColor = attributes[.backgroundColor] as? UIColor else { return }
+        
+        let restoredAlphaColor = backgroundColor.withAlphaComponent(1)
+        
+        restoredAlphaColor.setFill()
+        
         let range = self.characterRange(forGlyphRange: glyphsToShow, actualGlyphRange: nil)
         
         let glyphRange = self.glyphRange(forCharacterRange: range, actualCharacterRange: nil)
-        
-        UIColor.systemOrange.setFill()
         
         let context = UIGraphicsGetCurrentContext()
         context?.saveGState()
@@ -36,8 +44,8 @@ class IPNSLayoutManager: NSLayoutManager {
         self.enumerateLineFragments(forGlyphRange: glyphRange) { rect, usedRect, textContainer, glyphRange, stop in
             context?.addPath(UIBezierPath(roundedRect: usedRect, cornerRadius: 7).cgPath)
             
-            context?.setFillColor(UIColor.red.cgColor)
-            context?.setStrokeColor(UIColor.red.cgColor)
+            context?.setFillColor(restoredAlphaColor.cgColor)
+            context?.setStrokeColor(restoredAlphaColor.cgColor)
             context?.fillPath(using: .evenOdd)
             
             context?.strokePath()
