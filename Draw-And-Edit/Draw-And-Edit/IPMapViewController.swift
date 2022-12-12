@@ -90,11 +90,11 @@ class IPMapViewController: UIViewController {
     
     //MARK: - Text Editing Buttons.
     let alignmentChangeButton: UIButton = {
-        let image = UIImage(named: "textLeft")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: "textLeft")
 
         let button = UIButton()
         button.setImage(image, for: .normal)
-        button.tintColor = .black
+//        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(nil, action: #selector(alignmentChangeBarButtonTapped), for: .touchUpInside)
         
@@ -102,11 +102,10 @@ class IPMapViewController: UIViewController {
     }()
     
     let fillChangeButton: UIButton = {
-        let image = UIImage(named: "default")?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: "default")
         
         let button = UIButton()
         button.setImage(image, for: .normal)
-        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(nil, action: #selector(fillChangeBarButtonTapped), for: .touchUpInside)
         
@@ -115,7 +114,7 @@ class IPMapViewController: UIViewController {
     
     let fontSizeSlider: IPSliderView = {
         
-        let dimension = widthToDimensions(30)
+        let dimension = widthToDimensions(35)
         
         let slider = IPSliderView(frame: CGRect(x: 0, y: 0,
                                                 width: dimension.width,
@@ -391,7 +390,7 @@ extension IPMapViewController {
             
         }
 
-        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: imageName)
         
         fillChangeButton.setImage(image, for: .normal)
 
@@ -433,7 +432,7 @@ extension IPMapViewController {
             
         }
         
-        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate).withTintColor(.black)
+        let image = UIImage(named: imageName)
 
         alignmentChangeButton.setImage(image, for: .normal)
     }
