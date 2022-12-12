@@ -141,7 +141,6 @@ class IPMapViewController: UIViewController {
             
             doneButton.isHidden = newValue
             cancelButton.isHidden = newValue
-            fontSizeSlider.isHidden = newValue
             backgroundDarknerView.isHidden = newValue
             
         }
@@ -270,6 +269,10 @@ extension IPMapViewController {
     @objc func addNewTextView() {
         
         helperViewsHidden = false
+        
+        if fontSizeSlider.isHidden {
+            fontSizeSlider.isHidden = false
+        }
         
         let locaTextContainer: NSTextContainer = {
             let textContainer = NSTextContainer(size: .zero)
