@@ -14,9 +14,13 @@ This is a Telegram-like drawing and text editing app module which was a task for
  
 - [X] To make a background for text view to become nice. Without the background duplication.
    - [ ] To make a background seen as one area with rounded corners at each intersection.
+- [ ] Add an ability to add a few text views on the screen and change/delete them without any problems.
+- [ ] - 12.12.22 - Make the size of text container to be dynamic. The size must depend on text font size and content. Don't allow scrolling.
+
+## Done tasks:
+
 - [X] Substitute default slider with custom view as Telegram’s video sample shows.
    - [X] Improve how the slider looks when text editing is active.
 - [X] Refactor existing code that’s used to set filling. Move it to NSLayoutManager
 - [X] Use provided by Telegram icons for buttons and make them change icons dynamically.
 - [X] Add an ability to drag text view after saving.
-- [ ] Add an ability to add a few text views on the screen and change/delete them without any problems.
