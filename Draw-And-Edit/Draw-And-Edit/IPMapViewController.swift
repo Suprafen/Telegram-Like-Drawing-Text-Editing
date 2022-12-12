@@ -314,6 +314,12 @@ extension IPMapViewController {
         
         textView.delegate = self
         
+        textView.isUserInteractionEnabled = true
+        
+        let pangestureRecognizer = UIPanGestureRecognizer(target: self,
+                                                          action: #selector(viewMoved(_:)))
+        textView.addGestureRecognizer(pangestureRecognizer)
+        
         view.addSubview(textView)
         textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
         textView.center = view.center
@@ -491,6 +497,28 @@ extension IPMapViewController {
         fontSizeSlider.center = CGPoint(x: -fontSizeSlider.frame.maxY, y: center.y)
     }
     
+    
+    @objc func viewMoved(_ sender: UIPanGestureRecognizer) {
+        
+        guard let senderView = sender.view else { return }
+        let translation = sender.translation(in: view)
+        
+        switch sender.state {
+        case .began, .changed:
+            senderView.center = CGPoint(x: senderView.center.x + translation.x,
+                                        y: senderView.center.y + translation.y)
+            sender.setTranslation(CGPoint.zero, in: view)
+            
+//        case .ended:
+            // HEre goes the code that add bezier path that represent
+            // kind of a border with two control points to change text's
+            // translation(rotatition) state
+            
+        default:
+            break
+        }
+        
+    }
 }
 
 // MARK: - IPAvailableFontsCollectionViewControllerDelegate conformance
