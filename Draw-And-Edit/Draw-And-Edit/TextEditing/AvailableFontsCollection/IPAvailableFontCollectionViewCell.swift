@@ -41,7 +41,7 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
     
     func configure(withItem item: IPFont) {
         
-        let attributes: [NSAttributedString.Key : Any] = [.font : item.font ?? UIFont(name: "HelveticaNeue-Medium", size: 20)!, .foregroundColor : UIColor.black]
+        let attributes: [NSAttributedString.Key : Any] = [.font : item.font ?? UIFont(name: "HelveticaNeue-Medium", size: 20)!, .foregroundColor : UIColor.white]
 
         let attributedString = NSAttributedString(string: item.font?.fontName ?? "Font Name", attributes: attributes)
         

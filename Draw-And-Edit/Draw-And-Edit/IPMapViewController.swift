@@ -560,6 +560,12 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
 extension IPMapViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
+        
+//        let contentSize = textView.contentSize
+//        textView.frame.size = textView.sizeThatFits(contentSize)
+//        textView.textContainer.size = contentSize
+//        textView.sizeToFit()
+//        textView.isScrollEnabled = false
         guard let currentText = textView.text,
               !currentText.isEmpty,
               let currentAttributedText = textView.attributedText else {

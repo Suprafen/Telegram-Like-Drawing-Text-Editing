@@ -34,8 +34,6 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .clear
-        
         configureDataSource()
         
         collectionView.register(IPAvailableFontCollectionViewCell.self,
@@ -51,7 +49,6 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         
         cell.layer.cornerRadius = 10
         cell.layer.borderWidth = 2
-        cell.layer.borderColor = UIColor.black.cgColor
         
         let index = indexPath.item
         
