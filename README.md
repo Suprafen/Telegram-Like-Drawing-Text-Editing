@@ -15,7 +15,16 @@ This is a Telegram-like drawing and text editing app module which was a task for
 - [X] To make a background for text view to become nice. Without the background duplication.
    - [ ] To make a background seen as one area with rounded corners at each intersection.
 - [ ] Add an ability to add a few text views on the screen and change/delete them without any problems.
-- [ ] - 12.12.22 - Make the size of text container to be dynamic. The size must depend on text font size and content. Don't allow scrolling.
+
+### 12.13.22 
+- [ ] Text container size adjustment. Size should fit content size. It could be made as next: During init make probable size of the frame and use this size always when text is being edited, however when `textDidChange` called make the size of the container and text view to fit its content.
+- [ ] Make font name converter the way app could use bold version of e.g. Helvetica but the name to the user should remain Helvetica without any -bold suffixes.
+- [ ] Make sure buttons's state is the same when we switch between different text views.
+- [ ] Add an ability to delete text views after they've been added.
+- [ ] Add two points that centered horzontaly on the left and right sides of text views to make it possible to rotate views.
+### 12.12.22 
+- [ ] Make the size of text container to be dynamic. The size must depend on text font size and content. Don't allow scrolling.
+
 
 ## Done tasks:
 
