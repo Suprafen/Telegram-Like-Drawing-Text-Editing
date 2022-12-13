@@ -120,9 +120,9 @@ class IPMapViewController: UIViewController {
                                                 width: dimension.width,
                                                 height: dimension.height))
         
-        slider.minimumValue = 15
-        slider.value = 20
-        slider.maximumValue = 40
+        slider.minimumValue = 30
+        slider.value = 35
+        slider.maximumValue = 70
         slider.isHidden = true
         slider.addTarget(nil, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
 
@@ -289,7 +289,7 @@ extension IPMapViewController {
         }()
         
         let localTextStorage: IPNSTextStorage = {
-            let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "HelveticaNeue", size: 20)!])
+            let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "Helvetica-Bold", size: 35)!])
             
             let textStorage = IPNSTextStorage()
             

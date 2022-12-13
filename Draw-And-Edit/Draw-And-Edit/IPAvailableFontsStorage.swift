@@ -13,7 +13,7 @@ class IPAvailableFontsStorage {
     static let standardFontSize: CGFloat = 20
     
     var availableFonts: [IPFont] = [
-        IPFont(font: UIFont(name: fontName.Helvetica.rawValue,
+        IPFont(font: UIFont(name: fontName.Helvetica_Bold.rawValue,
                             size: standardFontSize)),
         IPFont(font: UIFont(name: fontName.AmericanTypewriter.rawValue,
                             size: standardFontSize)),
@@ -23,9 +23,9 @@ class IPAvailableFontsStorage {
                             size: standardFontSize)),
         IPFont(font: UIFont(name: fontName.Georgia.rawValue,
                             size: standardFontSize)),
-        IPFont(font: UIFont(name: fontName.AppleSDGothicNeo_Regular.rawValue,
+        IPFont(font: UIFont(name: fontName.Verdana_Bold.rawValue,
                             size: standardFontSize)),
-        IPFont(font: UIFont(name: fontName.Cochin.rawValue,
+        IPFont(font: UIFont(name: fontName.DamascusSemiBold.rawValue,
                             size: standardFontSize)),
     ]
 }
