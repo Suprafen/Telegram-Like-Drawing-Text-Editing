@@ -303,16 +303,17 @@ extension IPMapViewController {
         localLayoutManager.addTextContainer(locaTextContainer)
         localTextStorage.addLayoutManager(localLayoutManager)
         
-        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 200, height: 200),
+        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 300, height: 150),
                                   textContainer: locaTextContainer)
        
         textView.inputAccessoryView = toolbar
         
-        textView.backgroundColor = .clear
+        textView.backgroundColor = .blue.withAlphaComponent(0.3)
         
-        // This line removes suggested words above the keyboard
-        // Sometimes this stuff is occuring....
+        textView.isScrollEnabled = false
+        
         textView.spellCheckingType = .no
+        
         textView.autocorrectionType = .no
         
         textView.delegate = self
@@ -497,7 +498,19 @@ extension IPMapViewController {
     
     @objc func keyboardWillHide(_ notification: Notification) {
         let center = fontSizeSlider.center
+        
         fontSizeSlider.center = CGPoint(x: -fontSizeSlider.frame.maxY, y: center.y)
+        // Maybe this code is redundant because there's
+        // no way frame will be bigger than content size.
+        guard let textView = view.firstResponder as? IPTextView else { return }
+        
+        let contentSize = textView.contentSize
+        
+        textView.frame.size = textView.sizeThatFits(contentSize)
+        
+        textView.textContainer.size = contentSize
+        
+        textView.sizeToFit()
     }
     
     
@@ -561,11 +574,10 @@ extension IPMapViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-//        let contentSize = textView.contentSize
-//        textView.frame.size = textView.sizeThatFits(contentSize)
-//        textView.textContainer.size = contentSize
-//        textView.sizeToFit()
-//        textView.isScrollEnabled = false
+        textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
+        
+        textView.sizeToFit()
+        
         guard let currentText = textView.text,
               !currentText.isEmpty,
               let currentAttributedText = textView.attributedText else {
