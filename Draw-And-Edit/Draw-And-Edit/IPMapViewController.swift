@@ -132,6 +132,8 @@ class IPMapViewController: UIViewController {
     
     // MARK: - Stored properties
     
+    var maxTextViewFrameWidth: CGFloat = 0.0
+    
     var previousAttributedText: NSAttributedString?
     
     let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
@@ -153,9 +155,14 @@ class IPMapViewController: UIViewController {
         
         view.backgroundColor = .white
         
+        setupStoredProperties()
         setupNotifications()
         addDarknerAndHelperButtons()
         setupViews()
+    }
+    
+    func setupStoredProperties() {
+        maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8 ?? 100
     }
     
     func setupNotifications() {
@@ -303,8 +310,8 @@ extension IPMapViewController {
         localLayoutManager.addTextContainer(locaTextContainer)
         localTextStorage.addLayoutManager(localLayoutManager)
         
-        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 300, height: 150),
-                                  textContainer: locaTextContainer)
+        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: maxTextViewFrameWidth,
+                                                height: 150), textContainer: locaTextContainer)
        
         textView.inputAccessoryView = toolbar
         
@@ -451,13 +458,13 @@ extension IPMapViewController {
         // TODO: Fix this awfulness
         // Make a property instead and wake layout manager to do the job
         
-        guard let activeTextView = view.firstResponder as? IPTextView,
-              let currentText = activeTextView.text else {
+        guard let textView = view.firstResponder as? IPTextView,
+              let currentText = textView.text else {
             print("1st responder or current text has fucked up! - fontSizeSliderValueChanged")
             return
         }
         
-        let currentTextStorage = activeTextView.textStorage
+        let currentTextStorage = textView.textStorage
         
         guard let range = currentText.range(of: currentText) else {
             print("Range's fucked up -availableFontsCollectionViewController")
@@ -482,7 +489,20 @@ extension IPMapViewController {
         font = font.withSize(CGFloat(fontSize))
         
         currentTextStorage.addAttributes([.font : font], range: convertedRange)
-         
+        // Control text view's frame during font changings
+
+        if textView.frame.width < maxTextViewFrameWidth {
+            textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
+            
+        } else {
+            // FIXME: Bug with width of textview during font increasing.
+            // In that conditions text view's width should remain the same
+            textView.frame.size.height = 10
+            textView.frame.origin = CGPoint(x: 20, y: textView.frame.origin.y)
+            print("wdth: \(textView.frame.size.width)")
+           
+        }
+        textView.sizeToFit()
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
