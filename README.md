@@ -24,8 +24,6 @@ This is a Telegram-like drawing and text editing app module which was a task for
 - [ ] Make sure buttons's state is the same when we switch between different text views.
 - [ ] Add an ability to delete text views after they've been added.
 - [ ] Add two points that centered horzontaly on the left and right sides of text views to make it possible to rotate views.
-### 12.12.22 
-- [X] Make the size of text container to be dynamic. The size must depend on text font size and content. Don't allow scrolling.
 
 
 ## Done tasks:
@@ -35,3 +33,6 @@ This is a Telegram-like drawing and text editing app module which was a task for
 - [X] Refactor existing code that’s used to set filling. Move it to NSLayoutManager
 - [X] Use provided by Telegram icons for buttons and make them change icons dynamically.
 - [X] Add an ability to drag text view after saving.
+
+### 12.12.22 
+- [X] Make the size of text container to be dynamic. The size must depend on text font size and content. Don't allow scrolling.
