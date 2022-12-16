@@ -18,7 +18,8 @@ This is a Telegram-like drawing and text editing app module which was a task for
 
 ### 12.13.22 
 - [X] Text container size adjustment. Size should fit content size. It could be made as next: During init make probable size of the frame and use this size always when text is being edited, however when `textDidChange` called make the size of the container and text view to fit its content.
-   - [ ] Make max size for width for font changing. E.g. when we increase font size we want to use as many space as we could horizontaly before we go vertically. So make it possible to get all space horizontaly. It should be a conditional btw.
+   - [X] Make max size for width for font changing. E.g. when we increase font size we want to use as many space as we could horizontaly before we go vertically. So make it possible to get all space horizontaly. It should be a conditional btw.
+      - [ ] Still need to improve how this looks.
 - [ ] Make font name converter the way app could use bold version of e.g. Helvetica but the name to the user should remain Helvetica without any -bold suffixes.
 - [ ] Make sure buttons's state is the same when we switch between different text views.
 - [ ] Add an ability to delete text views after they've been added.
