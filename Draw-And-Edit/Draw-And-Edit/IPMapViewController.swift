@@ -162,7 +162,7 @@ class IPMapViewController: UIViewController {
     }
     
     func setupStoredProperties() {
-        maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8 ?? 100
+        maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8
     }
     
     func setupNotifications() {
@@ -332,6 +332,7 @@ extension IPMapViewController {
         textView.addGestureRecognizer(pangestureRecognizer)
         
         view.addSubview(textView)
+        
         textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
         textView.center = view.center
     }
@@ -490,19 +491,11 @@ extension IPMapViewController {
         
         currentTextStorage.addAttributes([.font : font], range: convertedRange)
         // Control text view's frame during font changings
-
-        if textView.frame.width < maxTextViewFrameWidth {
-            textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
-            
-        } else {
-            // FIXME: Bug with width of textview during font increasing.
-            // In that conditions text view's width should remain the same
-            textView.frame.size.height = 10
-            textView.frame.origin = CGPoint(x: 20, y: textView.frame.origin.y)
-            print("wdth: \(textView.frame.size.width)")
-           
-        }
+        
+        textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
+        
         textView.sizeToFit()
+
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {

@@ -43,7 +43,7 @@ class IPAvailableFontCollectionViewCell: UICollectionViewCell {
         
         let attributes: [NSAttributedString.Key : Any] = [.font : item.font ?? UIFont(name: "HelveticaNeue-Medium", size: 20)!, .foregroundColor : UIColor.white]
 
-        let attributedString = NSAttributedString(string: item.font?.fontName ?? "Font Name", attributes: attributes)
+        let attributedString = NSAttributedString(string: item.font?.familyName ?? "Font Name", attributes: attributes)
         
         label.attributedText = attributedString
         
