@@ -606,9 +606,11 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
 extension IPMapViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        
-        textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
-        
+        if textView.frame.size.width == maxTextViewFrameWidth {
+            textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
+        } else {
+            textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
+        }
         textView.sizeToFit()
         
         guard let currentText = textView.text,
