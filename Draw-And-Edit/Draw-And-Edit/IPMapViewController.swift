@@ -132,6 +132,10 @@ class IPMapViewController: UIViewController {
     
     // MARK: - Stored properties
     
+    var referenceTextViewCenterPoint: CGPoint = .init(x: 0, y: 0)
+    
+    var isEditingActive: Bool = false
+    
     var maxTextViewFrameWidth: CGFloat = 0.0
     
     var previousAttributedText: NSAttributedString?
@@ -499,6 +503,9 @@ extension IPMapViewController {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
+        
+        guard !isEditingActive else { return }
+        
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let _ = keyboardRectangle.height // keyboard height
@@ -506,6 +513,15 @@ extension IPMapViewController {
             let keyboardOrigin = keyboardRectangle.origin
             
             fontSizeSlider.center = CGPoint(x: 0, y: keyboardOrigin.y - fontSizeSlider.frame.minY / 2)
+            
+            guard let textView = view.firstResponder else { return }
+            
+            referenceTextViewCenterPoint = textView.center
+            
+            textView.center = view.center
+            
+            isEditingActive = true
+            
         }
     }
     
@@ -524,6 +540,10 @@ extension IPMapViewController {
         textView.textContainer.size = contentSize
         
         textView.sizeToFit()
+        
+        textView.center = referenceTextViewCenterPoint
+        
+        isEditingActive = false
     }
     
     
