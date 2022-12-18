@@ -179,14 +179,19 @@ class IPMapViewController: UIViewController {
         addDarknerAndHelperButtons()
         setupViews()
     }
-    func chnageToolbarButtonsImage() {
+    func correctToolbarButtonsImages() {
         guard let textView = view.firstResponder as? IPTextView else { return }
-
-        let storage = textView.textStorage
-
-        let attributes = storage.attributes(at: 0, effectiveRange: nil)
-
         
+        switch textView.textFillState {
+            case .defaultFill:
+                fillChangeButton.setImage(UIImage(named: "default"), for: .normal)
+            case .filled:
+                fillChangeButton.setImage(UIImage(named: "filled"), for: .normal)
+            case .semi:
+                 fillChangeButton.setImage(UIImage(named: "semi"), for: .normal)
+            case .stroke: 
+                fillChangeButton.setImage(UIImage(named: "stroke"), for: .normal)
+        }
     }
     func setupStoredProperties() {
         maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8
@@ -386,10 +391,10 @@ extension IPMapViewController {
     }
     
     @objc func fillChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        guard let textView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeFilledState()
-        guard let attributedText = activeTextView.attributedText else {
+        guard let attributedText = textView.attributedText else {
             print("attributedText's fucked up!")
             return
         }
@@ -401,7 +406,8 @@ extension IPMapViewController {
         case .defaultFill:
           
             filledAs = .defaultFill
-            
+            textView.textFillState = .defaultFill
+
             attributes.removeValue(forKey: .strokeColor)
             attributes.removeValue(forKey: .strokeWidth)
             
@@ -410,14 +416,15 @@ extension IPMapViewController {
         case .filled:
             
             filledAs = .filled
-            
+            textView.textFillState = .filled
+
             attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .semi:
             
             filledAs = .semi
-            
+            textView.textFillState = .semi
             
             attributes[.backgroundColor] = UIColor.orange.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
@@ -425,6 +432,7 @@ extension IPMapViewController {
         case .stroke:
             
             filledAs = .stroke
+            textView.textFillState = .stroke
 
             attributes.removeValue(forKey: .backgroundColor)
             
@@ -434,13 +442,13 @@ extension IPMapViewController {
             
         }
 
-        let currentTextViewTextStorage = activeTextView.textStorage
+        let currentTextViewTextStorage = textView.textStorage
 
         let attributedString = NSAttributedString(string: currentTextViewTextStorage.string, attributes: attributes)
 
         currentTextViewTextStorage.setAttributedString(attributedString)
         
-        activeTextView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
+        textView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
     }
     
     @objc func alignmentChangeBarButtonTapped() {
@@ -528,6 +536,8 @@ extension IPMapViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let _ = keyboardRectangle.height // keyboard height
             
+            correctToolbarButtonsImages()
+
             let keyboardOrigin = keyboardRectangle.origin
             
             fontSizeSlider.center = CGPoint(x: 0, y: keyboardOrigin.y - fontSizeSlider.frame.minY / 2)
