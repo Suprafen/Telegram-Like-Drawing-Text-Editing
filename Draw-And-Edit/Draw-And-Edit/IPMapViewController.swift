@@ -142,6 +142,34 @@ class IPMapViewController: UIViewController {
     
     let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
     
+    var filledAs: IPTextFillState = .defaultFill {
+        willSet(newValue) {
+            switch newValue {
+            case .defaultFill:
+                fillChangeButton.setImage(UIImage(named: "default"), for: .normal)
+            case .filled:
+                fillChangeButton.setImage(UIImage(named: "filled"), for: .normal)
+                case .semi:
+                    fillChangeButton.setImage(UIImage(named: "semi"), for: .normal)
+            case .stroke:
+                fillChangeButton.setImage(UIImage(named: "stroke"), for: .normal)
+            }
+        }
+    }
+
+        var alignedAs: IPTextAlignmentState = .left {
+            willSet(newValue) {
+                switch newValue {
+                case .left:
+                    alignmentChangeButton.setImage(UIImage(named: "textLeft"), for: .normal)
+                case .center:
+                    alignmentChangeButton.setImage(UIImage(named: "textCenter"), for: .normal)
+                case .right:
+                    alignmentChangeButton.setImage(UIImage(named: "textRight"), for: .normal)
+                }
+            }
+        }
+
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
             
@@ -164,7 +192,33 @@ class IPMapViewController: UIViewController {
         addDarknerAndHelperButtons()
         setupViews()
     }
-    
+
+    func correctToolbarButtonsImages() {
+        guard let textView = view.firstResponder as? IPTextView else { return }
+        
+        // Either could be moved to text view class and called as a function and we've got here a closure
+        // or we could have a delegate method that would be called when the text view changes its state.
+        switch textView.textFillState {
+            case .defaultFill:
+                fillChangeButton.setImage(UIImage(named: "default"), for: .normal)
+            case .filled:
+                fillChangeButton.setImage(UIImage(named: "filled"), for: .normal)
+            case .semi:
+                 fillChangeButton.setImage(UIImage(named: "semi"), for: .normal)
+            case .stroke: 
+                fillChangeButton.setImage(UIImage(named: "stroke"), for: .normal)
+        }
+
+        switch textView.textAlignmentState {
+            case .left:
+                alignmentChangeButton.setImage(UIImage(named: "textLeft"), for: .normal)
+            case .center:
+                alignmentChangeButton.setImage(UIImage(named: "textCenter"), for: .normal)
+            case .right:
+                alignmentChangeButton.setImage(UIImage(named: "textRight"), for: .normal)
+        }
+    }
+
     func setupStoredProperties() {
         maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8
     }
@@ -363,46 +417,48 @@ extension IPMapViewController {
     }
     
     @objc func fillChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        guard let textView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeFilledState()
-        guard let attributedText = activeTextView.attributedText else {
+        guard let attributedText = textView.attributedText else {
             print("attributedText's fucked up!")
             return
         }
         
         var attributes = attributedText.attributes(at: 0, effectiveRange: nil)
         
-        let imageName: String
-        
         switch appStateController.filledAs {
             
-        case .normal:
+        case .defaultFill:
           
-            imageName = "default"
-            
+            filledAs = .defaultFill
+            textView.textFillState = .defaultFill
+
             attributes.removeValue(forKey: .strokeColor)
             attributes.removeValue(forKey: .strokeWidth)
             
             attributes[.foregroundColor] = UIColor.black
             
-        case .fill:
+        case .filled:
             
-            imageName = "filled"
-            
+            filledAs = .filled
+            textView.textFillState = .filled
+
             attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
-        case .fifthFill:
+        case .semi:
             
-            imageName = "semi"
+            filledAs = .semi
+            textView.textFillState = .semi
             
             attributes[.backgroundColor] = UIColor.orange.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
             
-            imageName = "stroke"
+            filledAs = .stroke
+            textView.textFillState = .stroke
 
             attributes.removeValue(forKey: .backgroundColor)
             
@@ -412,21 +468,17 @@ extension IPMapViewController {
             
         }
 
-        let image = UIImage(named: imageName)
-        
-        fillChangeButton.setImage(image, for: .normal)
-
-        let currentTextViewTextStorage = activeTextView.textStorage
+        let currentTextViewTextStorage = textView.textStorage
 
         let attributedString = NSAttributedString(string: currentTextViewTextStorage.string, attributes: attributes)
 
         currentTextViewTextStorage.setAttributedString(attributedString)
         
-        activeTextView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
+        textView.textAlignment = NSTextAlignment(rawValue: appStateController.alignment.rawValue) ?? .left
     }
     
     @objc func alignmentChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        guard let textView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeAlignmentState()
         
@@ -435,28 +487,21 @@ extension IPMapViewController {
         switch appStateController.alignment {
             
         case .left:
-            
-            imageName = "textLeft"
-            
-            activeTextView.textAlignment = .left
-            
+    
+            textView.textAlignmentState = .left
+            alignedAs = .left
+
         case .center:
             
-            imageName = "textCenter"
-            
-            activeTextView.textAlignment = .center
-            
-        case .right:
-            
-            imageName = "textRight"
-            
-            activeTextView.textAlignment = .right
-            
-        }
-        
-        let image = UIImage(named: imageName)
+            textView.textAlignmentState = .center
+            alignedAs = .center
 
-        alignmentChangeButton.setImage(image, for: .normal)
+        case .right:
+
+            textView.textAlignmentState = .right
+            alignedAs = .right
+
+        }
     }
     
     @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
@@ -510,6 +555,8 @@ extension IPMapViewController {
             let keyboardRectangle = keyboardFrame.cgRectValue
             let _ = keyboardRectangle.height // keyboard height
             
+            correctToolbarButtonsImages()
+
             let keyboardOrigin = keyboardRectangle.origin
             
             fontSizeSlider.center = CGPoint(x: 0, y: keyboardOrigin.y - fontSizeSlider.frame.minY / 2)

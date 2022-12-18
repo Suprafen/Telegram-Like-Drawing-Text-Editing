@@ -9,7 +9,7 @@ import Foundation
 
 class AppStateController {
     
-    var filledAs: IPTextFillState = .normal
+    var filledAs: IPTextFillState = .defaultFill
     
     var alignment: IPTextAlignmentState = .left
     
@@ -19,7 +19,7 @@ class AppStateController {
         
         let count = IPTextFillState.allCases.count
         let index = count > (filledAs.rawValue + 1) ? filledAs.rawValue + 1 : 0
-        filledAs = IPTextFillState(rawValue: index) ?? .normal
+        filledAs = IPTextFillState(rawValue: index) ?? .defaultFill
         
     }
     
