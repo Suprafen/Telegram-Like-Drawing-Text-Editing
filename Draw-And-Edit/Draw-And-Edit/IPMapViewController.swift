@@ -142,6 +142,21 @@ class IPMapViewController: UIViewController {
     
     let collectionController = IPAvailableFontsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
     
+    var filledAs: IPTextFillState = .defaultFill {
+        willSet(newValue) {
+            switch newValue {
+            case .defaultFill:
+                fillChangeButton.setImage(UIImage(named: "default"), for: .normal)
+            case .filled:
+                fillChangeButton.setImage(UIImage(named: "filled"), for: .normal)
+                case .semi:
+                    fillChangeButton.setImage(UIImage(named: "semi"), for: .normal)
+            case .stroke:
+                fillChangeButton.setImage(UIImage(named: "stroke"), for: .normal)
+            }
+        }
+    }
+
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
             
@@ -164,7 +179,15 @@ class IPMapViewController: UIViewController {
         addDarknerAndHelperButtons()
         setupViews()
     }
-    
+    func chnageToolbarButtonsImage() {
+        guard let textView = view.firstResponder as? IPTextView else { return }
+
+        let storage = textView.textStorage
+
+        let attributes = storage.attributes(at: 0, effectiveRange: nil)
+
+        
+    }
     func setupStoredProperties() {
         maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8
     }
@@ -373,36 +396,35 @@ extension IPMapViewController {
         
         var attributes = attributedText.attributes(at: 0, effectiveRange: nil)
         
-        let imageName: String
-        
         switch appStateController.filledAs {
             
-        case .normal:
+        case .defaultFill:
           
-            imageName = "default"
+            filledAs = .defaultFill
             
             attributes.removeValue(forKey: .strokeColor)
             attributes.removeValue(forKey: .strokeWidth)
             
             attributes[.foregroundColor] = UIColor.black
             
-        case .fill:
+        case .filled:
             
-            imageName = "filled"
+            filledAs = .filled
             
             attributes[.backgroundColor] = UIColor.black.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
-        case .fifthFill:
+        case .semi:
             
-            imageName = "semi"
+            filledAs = .semi
+            
             
             attributes[.backgroundColor] = UIColor.orange.withAlphaComponent(0)
             attributes[.foregroundColor] = UIColor.white
             
         case .stroke:
             
-            imageName = "stroke"
+            filledAs = .stroke
 
             attributes.removeValue(forKey: .backgroundColor)
             
@@ -411,10 +433,6 @@ extension IPMapViewController {
             attributes[.strokeWidth] = -3
             
         }
-
-        let image = UIImage(named: imageName)
-        
-        fillChangeButton.setImage(image, for: .normal)
 
         let currentTextViewTextStorage = activeTextView.textStorage
 
