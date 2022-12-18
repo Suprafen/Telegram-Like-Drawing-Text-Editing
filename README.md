@@ -21,10 +21,8 @@ This is a Telegram-like drawing and text editing app module which was a task for
    - [X] Make max size for width for font changing. E.g. when we increase font size we want to use as many space as we could horizontaly before we go vertically. So make it possible to get all space horizontaly. It should be a conditional btw.
       - [ ] Still need to improve how this looks.
 
-- [ ] Make sure buttons's state is the same when we switch between different text views.
 - [ ] Add an ability to delete text views after they've been added.
 - [ ] Add two points that centered horzontaly on the left and right sides of text views to make it possible to rotate views.
-
 
 ## Done tasks:
 
@@ -39,3 +37,5 @@ This is a Telegram-like drawing and text editing app module which was a task for
 
 
 ~~- [ ] Make font name converter the way app could use bold version of e.g. Helvetica but the name to the user should remain Helvetica without any -bold suffixes.~~
+
+- [X] Make sure buttons's state is the same when we switch between different text views.
