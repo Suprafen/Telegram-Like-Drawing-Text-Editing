@@ -157,6 +157,19 @@ class IPMapViewController: UIViewController {
         }
     }
 
+        var alignedAs: IPTextAlignmentState = .left {
+            willSet(newValue) {
+                switch newValue {
+                case .left:
+                    alignmentChangeButton.setImage(UIImage(named: "textLeft"), for: .normal)
+                case .center:
+                    alignmentChangeButton.setImage(UIImage(named: "textCenter"), for: .normal)
+                case .right:
+                    alignmentChangeButton.setImage(UIImage(named: "textRight"), for: .normal)
+                }
+            }
+        }
+
     var helperViewsHidden: Bool = true {
         willSet(newValue) {
             
@@ -179,9 +192,12 @@ class IPMapViewController: UIViewController {
         addDarknerAndHelperButtons()
         setupViews()
     }
+
     func correctToolbarButtonsImages() {
         guard let textView = view.firstResponder as? IPTextView else { return }
         
+        // Either could be moved to text view class and called as a function and we've got here a closure
+        // or we could have a delegate method that would be called when the text view changes its state.
         switch textView.textFillState {
             case .defaultFill:
                 fillChangeButton.setImage(UIImage(named: "default"), for: .normal)
@@ -192,7 +208,17 @@ class IPMapViewController: UIViewController {
             case .stroke: 
                 fillChangeButton.setImage(UIImage(named: "stroke"), for: .normal)
         }
+
+        switch textView.textAlignmentState {
+            case .left:
+                alignmentChangeButton.setImage(UIImage(named: "textLeft"), for: .normal)
+            case .center:
+                alignmentChangeButton.setImage(UIImage(named: "textCenter"), for: .normal)
+            case .right:
+                alignmentChangeButton.setImage(UIImage(named: "textRight"), for: .normal)
+        }
     }
+
     func setupStoredProperties() {
         maxTextViewFrameWidth = UIScreen.main.bounds.width * 0.8
     }
@@ -452,7 +478,7 @@ extension IPMapViewController {
     }
     
     @objc func alignmentChangeBarButtonTapped() {
-        guard let activeTextView = view.firstResponder as? IPTextView else { return }
+        guard let textView = view.firstResponder as? IPTextView else { return }
         
         appStateController.changeAlignmentState()
         
@@ -461,28 +487,21 @@ extension IPMapViewController {
         switch appStateController.alignment {
             
         case .left:
-            
-            imageName = "textLeft"
-            
-            activeTextView.textAlignment = .left
-            
+    
+            textView.textAlignmentState = .left
+            alignedAs = .left
+
         case .center:
             
-            imageName = "textCenter"
-            
-            activeTextView.textAlignment = .center
-            
-        case .right:
-            
-            imageName = "textRight"
-            
-            activeTextView.textAlignment = .right
-            
-        }
-        
-        let image = UIImage(named: imageName)
+            textView.textAlignmentState = .center
+            alignedAs = .center
 
-        alignmentChangeButton.setImage(image, for: .normal)
+        case .right:
+
+            textView.textAlignmentState = .right
+            alignedAs = .right
+
+        }
     }
     
     @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
