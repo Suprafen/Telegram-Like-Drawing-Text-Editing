@@ -84,8 +84,6 @@ class IPNSLayoutManager: NSLayoutManager {
         let currentIndexOfStrokePoints: Int = strokePoints.count
         
         strokePoints[currentIndexOfStrokePoints] = ["ltc": ltc, "rtc": rtc, "rbc": rbc, "lbc": lbc]
-        
-        print(strokePoints)
     }
     
     func buildPath() {
@@ -93,12 +91,24 @@ class IPNSLayoutManager: NSLayoutManager {
         
         for i: Int in 0..<numberOfLines {
             let currentLine: [String : CGPoint]? = strokePoints[i]
-            
+
             guard let ltc: CGPoint = currentLine?["ltc"],
                   let rtc: CGPoint = currentLine?["rtc"],
                   let rbc: CGPoint = currentLine?["rbc"],
                   let lbc: CGPoint = currentLine?["lbc"] else { return }
             
+            var previousLine: [String : CGPoint]? = nil
+
+            if i > 0 {
+                previousLine = strokePoints[i - 1]
+            }
+
+            var nextLine: [String : CGPoint]? = nil
+
+            if i < numberOfLines - 1 {
+                nextLine = strokePoints[i + 1]
+            }
+
             if numberOfLines == 1 {
                 strokePath.move(to: ltc)
                 strokePath.addLine(to: rtc)
@@ -120,15 +130,26 @@ class IPNSLayoutManager: NSLayoutManager {
                     strokePath.addLine(to: rtc)
                     strokePath.addArc(withCenter: CGPoint(x: rtc.x - cornerRadius,
                                                           y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: 0, clockwise: true)
+                    
                     strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
                     // Only if the next line is less than the current on more than 10 percent
-                    //                     strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
-                    //                                                         y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0, endAngle: CGFloat(Double.pi / 2), clockwise: true)
-                    // Only if the next line is greater than the current on more than 10 percent
-                    strokePath.addArc(withCenter: CGPoint(x: rbc.x + cornerRadius, y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: Double.pi, endAngle: (2 * Double.pi) / 4, clockwise: false)
+                    if let nextLine = nextLine {
+                        
+                        if nextLine["rtc"]!.x < rtc.x {
+                            // From top the left ( corner inside)
+                            strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
+                                                                  y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0 , endAngle: Double.pi / 4, clockwise: true)
+                        } else if nextLine["rtc"]!.x > rtc.x {
+                            // From top to the right ( corner outside)
+                            strokePath.addLine(to: CGPoint(x: rbc.x - cornerRadius, y: rbc.y))
+                            strokePath.addArc(withCenter: CGPoint(x: rbc.x + cornerRadius, y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: Double.pi, endAngle: (2 * Double.pi) / 4, clockwise: false)
+                        }
+                    }
                     // MARK: The last line/rectangle
                 } else if i == numberOfLines - 1 {
+                    // TODO: Refactor this section to have proper behavior
                     strokePath.addLine(to: rtc)
+                    
                     strokePath.addArc(withCenter: CGPoint(x: rtc.x - cornerRadius,
                                                           y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: 0, clockwise: true)
                     strokePath.addLine(to: rbc)
@@ -155,13 +176,30 @@ class IPNSLayoutManager: NSLayoutManager {
                     }
                 } else {
                     // MARK: The right side of some middle line
-                    strokePath.addLine(to: rtc)
-                    strokePath.addArc(withCenter: CGPoint(x: rtc.x - cornerRadius,
-                                                          y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: 0, clockwise: true)
-                    strokePath.addLine(to: rbc)
-                    strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
-                                                          y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0, endAngle: CGFloat(Double.pi / 2), clockwise: true)
                     
+                    if let previousLine = previousLine {
+                        print("PreviousL: \(previousLine["rtc"]!.x); Curr: \(rtc.x)")
+                        if previousLine["rtc"]!.x > rtc.x {
+                            // From top to the left( corner outside )
+                            strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
+                            strokePath.addArc(withCenter: CGPoint(x: rtc.x + cornerRadius, y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: (3 * Double.pi) / 2, endAngle: Double.pi, clockwise: false)
+                        } else {
+                            // From top to the rigth ( corner outside)
+                            strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y))
+                        }
+                    }
+                    
+                    if let nextLine = nextLine {
+                        if nextLine["rtc"]!.x > rtc.x {
+                            // From top to the right ( corner outside)
+                            strokePath.addLine(to: CGPoint(x: rbc.x - cornerRadius, y: rbc.y))
+                            strokePath.addArc(withCenter: CGPoint(x: rbc.x + cornerRadius, y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: Double.pi, endAngle: (2 * Double.pi) / 4, clockwise: false)
+                        } else {
+                            // From top to the left ( corner inside)
+                            strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
+                                                                  y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0 , endAngle: Double.pi / 4, clockwise: true)
+                        }
+                    }
                 }
             }
         }
