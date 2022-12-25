@@ -250,13 +250,14 @@ class IPNSLayoutManager: NSLayoutManager {
             } else if c == 0 {
                 // The first line/rectangle from the top.
                 if let previousLine = previousLine {
+                    // Previous is bigger
                     if previousLine["ltc"]!.x < lbc.x {
-                        strokePath.addLine(to: lbc)
-                        strokePath.addArc(withCenter: CGPoint(x: lbc.x + cornerRadius,
-                                                              y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi / 2), endAngle: CGFloat(Double.pi), clockwise: true)
+                        strokePath.addLine(to: CGPoint(x: lbc.x - cornerRadius, y: lbc.y))
+                        strokePath.addArc(withCenter: CGPoint(x: lbc.x - cornerRadius,
+                                                              y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: 0, clockwise: false)
                     } else {
-                        strokePath.addLine(to: CGPoint(x:lbc.x - cornerRadius, y: lbc.y))
-                        strokePath.addArc(withCenter: CGPoint(x:lbc.x - cornerRadius, y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: Double.pi, endAngle: (3 * Double.pi) / 2, clockwise: false)
+                        strokePath.addLine(to: CGPoint(x:lbc.x + cornerRadius, y: lbc.y))
+                        strokePath.addArc(withCenter: CGPoint(x:lbc.x + cornerRadius, y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: Double.pi, clockwise: true)
                     }
                 }
                 
@@ -295,6 +296,5 @@ class IPNSLayoutManager: NSLayoutManager {
             }
             c -= 1
         }
-        
     }
 }
