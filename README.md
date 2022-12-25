@@ -13,7 +13,8 @@ This is a Telegram-like drawing and text editing app module which was a task for
  ## Current tasks: 
  
 - [X] To make a background for text view to become nice. Without the background duplication.
-   - [ ] To make a background seen as one area with rounded corners at each intersection.
+   - [X] To make a background seen as one area with rounded corners at each intersection.
+   - [ ] To make a fix for two almost identical by length line have the same that is picked fromd the max(next, current)
 - [ ] Add an ability to add a few text views on the screen and change/delete them without any problems.
 
 ### 12.13.22 
