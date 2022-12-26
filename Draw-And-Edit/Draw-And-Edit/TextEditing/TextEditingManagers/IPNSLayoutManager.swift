@@ -175,10 +175,7 @@ class IPNSLayoutManager: NSLayoutManager {
                             // From top to the left( corner outside )
                             strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
                             strokePath.addArc(withCenter: CGPoint(x: rtc.x + cornerRadius, y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: (3 * Double.pi) / 2, endAngle: Double.pi, clockwise: false)
-                        } else {
-                            // From top to the rigth ( corner outside)
-                            strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y))
-                        }
+                        } 
                     }
                     
                     if let nextLine = nextLine {
@@ -188,7 +185,7 @@ class IPNSLayoutManager: NSLayoutManager {
                             strokePath.addArc(withCenter: CGPoint(x: rbc.x + cornerRadius, y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: Double.pi, endAngle: (2 * Double.pi) / 4, clockwise: false)
                         } else {
                             // From top to the left ( corner inside)
-                            strokePath.addLine(to: rbc)
+                            strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
                             strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
                                                                   y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0 , endAngle: Double.pi / 4, clockwise: true)
                         }
