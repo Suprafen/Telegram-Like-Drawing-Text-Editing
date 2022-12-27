@@ -91,10 +91,10 @@ class IPNSLayoutManager: NSLayoutManager {
         for i: Int in 0..<numberOfLines {
             let currentLine: [String : CGPoint]? = strokePoints[i]
 
-            guard let ltc: CGPoint = currentLine?["ltc"],
-                  let rtc: CGPoint = currentLine?["rtc"],
-                  let rbc: CGPoint = currentLine?["rbc"],
-                  let lbc: CGPoint = currentLine?["lbc"] else { return }
+            guard var ltc: CGPoint = currentLine?["ltc"],
+                  var rtc: CGPoint = currentLine?["rtc"],
+                  var rbc: CGPoint = currentLine?["rbc"],
+                  var lbc: CGPoint = currentLine?["lbc"] else { return }
             
             var previousLine: [String : CGPoint]? = nil
 
@@ -110,16 +110,16 @@ class IPNSLayoutManager: NSLayoutManager {
 
             if numberOfLines == 1 {
                 strokePath.move(to: ltc)
-                strokePath.addLine(to: rtc)
+                strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
                 strokePath.addArc(withCenter: CGPoint(x: rtc.x - cornerRadius,
                                                       y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: 0, clockwise: true)
-                strokePath.addLine(to: rbc)
+                strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
                 strokePath.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
                                                       y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0, endAngle: CGFloat(Double.pi / 2), clockwise: true)
-                strokePath.addLine(to: lbc)
+                strokePath.addLine(to: CGPoint(x: lbc.x + cornerRadius, y: lbc.y))
                 strokePath.addArc(withCenter: CGPoint(x: lbc.x + cornerRadius,
                                                       y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi / 2), endAngle: CGFloat(Double.pi), clockwise: true)
-                strokePath.addLine(to: ltc)
+                strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
                 strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
                                                       y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
             }
