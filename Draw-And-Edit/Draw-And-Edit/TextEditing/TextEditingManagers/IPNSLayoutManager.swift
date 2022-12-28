@@ -225,28 +225,28 @@ class IPNSLayoutManager: NSLayoutManager {
                 
                 guard let nextLine: [String : CGPoint] = nextLine else { return }
                 addLine(ltc: ltc)
-                    
-                    if nextLine["ltc"]!.x < ltc.x {
-                        // Next line is greater than current    
-                        addArc(ltc: ltc, currentGreater: false)
-                    } else {
-                        // Next line is less than current
-                        addArc(ltc: ltc)
-                    }
+                
+                if nextLine["ltc"]!.x < ltc.x {
+                    // Next line is greater than current
+                    addArc(ltc: ltc, currentGreater: false)
+                } else {
+                    // Next line is less than current
+                    addArc(ltc: ltc)
+                }
                 
             } else if c == 0 {
                 // The first line/rectangle from the top.
                 guard let previousLine: [String : CGPoint] = previousLine else { return }
                 
                 addLine(lbc: lbc)
-                    
-                    if previousLine["ltc"]!.x < lbc.x {
-                        // Previous is bigger
-                        addArc(lbc: lbc, currentGreater: false)
-                    } else {
-                        // Previous is less than current
-                        addArc(lbc: lbc)
-                    }
+                
+                if previousLine["ltc"]!.x < lbc.x {
+                    // Previous is bigger
+                    addArc(lbc: lbc, currentGreater: false)
+                } else {
+                    // Previous is less than current
+                    addArc(lbc: lbc)
+                }
                 
                 addLine(ltc: ltc)
                 addArc(ltc: ltc)
@@ -254,35 +254,39 @@ class IPNSLayoutManager: NSLayoutManager {
             } else {
                 
                 guard let previousLine: [String : CGPoint] = previousLine else { return }
+                
+                addLine(lbc: lbc)
+                
+                if previousLine["ltc"]!.x < lbc.x {
+                    // Previous line bigger than current
                     
-addLine(lbc: lbc)
-
-                    if previousLine["ltc"]!.x < lbc.x {
-                        // Previous line bigger than current
-                        
-                        addArc(lbc: lbc, currentGreater: false)
-                        
-                    } else {
-                        // Previous line is less than current
-                        addArc(lbc: lbc)
-                    }
+                    addArc(lbc: lbc, currentGreater: false)
+                    
+                } else {
+                    // Previous line is less than current
+                    addArc(lbc: lbc)
+                }
                 
                 guard let nextLine = nextLine else { return }
-
-                    addLine(ltc: ltc)
-
-                    if nextLine["ltc"]!.x < ltc.x {
-                        // Next line is greater than current
-                        addArc(ltc: ltc, currentGreater: false)
-                        
-                    } else {
-                        // Next luine is less than current
-                        addArc(ltc: ltc)
-                    }
+                
+                addLine(ltc: ltc)
+                
+                if nextLine["ltc"]!.x < ltc.x {
+                    // Next line is greater than current
+                    addArc(ltc: ltc, currentGreater: false)
+                    
+                } else {
+                    // Next luine is less than current
+                    addArc(ltc: ltc)
+                }
             }
             c -= 1
         }
     }
+}
+
+// MARK: Lines and Arc drawing
+extension IPNSLayoutManager {
     
     func addLine(rtc: CGPoint) {
         strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
@@ -335,7 +339,7 @@ addLine(lbc: lbc)
             strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
                                                   y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
         } else {
-            strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius, 
+            strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius,
                                                   y: ltc.y + cornerRadius), radius: cornerRadius , startAngle: 0, endAngle: (3 * Double.pi) / 2, clockwise: false)
         }
     }
