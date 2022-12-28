@@ -220,70 +220,65 @@ class IPNSLayoutManager: NSLayoutManager {
             
             if c == i {
                 // Keep in mind that greater line will have lower X-Axis!!!!
-                strokePath.addLine(to: lbc)
-                strokePath.addArc(withCenter: CGPoint(x: lbc.x + cornerRadius,
-                                                      y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi / 2), endAngle: CGFloat(Double.pi), clockwise: true)
+                addLine(lbc: lbc)
+                addArc(lbc: lbc)
                 
-                
-                if let nextLine = nextLine {
-                    // Next line is greater than current
+                guard let nextLine: [String : CGPoint] = nextLine else { return }
+                addLine(ltc: ltc)
+                    
                     if nextLine["ltc"]!.x < ltc.x {
-                        strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
-                        strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius, y: ltc.y + cornerRadius), radius: cornerRadius , startAngle: 0, endAngle: (3 * Double.pi) / 2, clockwise: false)
-                        
+                        // Next line is greater than current    
+                        addArc(ltc: ltc, currentGreater: false)
                     } else {
                         // Next line is less than current
-                        strokePath.addLine(to: ltc)
-                        strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
-                                                              y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
+                        addArc(ltc: ltc)
                     }
-                }
+                
             } else if c == 0 {
                 // The first line/rectangle from the top.
-                if let previousLine = previousLine {
-                    // Previous is bigger
-                    if previousLine["ltc"]!.x < lbc.x {
-                        strokePath.addLine(to: CGPoint(x: lbc.x - cornerRadius, y: lbc.y))
-                        strokePath.addArc(withCenter: CGPoint(x: lbc.x - cornerRadius,
-                                                              y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: 0, clockwise: false)
-                    } else {
-                        strokePath.addLine(to: CGPoint(x:lbc.x + cornerRadius, y: lbc.y))
-                        strokePath.addArc(withCenter: CGPoint(x:lbc.x + cornerRadius, y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: Double.pi, clockwise: true)
-                    }
-                }
+                guard let previousLine: [String : CGPoint] = previousLine else { return }
                 
-                strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
-                strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
-                                                      y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
+                addLine(lbc: lbc)
+                    
+                    if previousLine["ltc"]!.x < lbc.x {
+                        // Previous is bigger
+                        addArc(lbc: lbc, currentGreater: false)
+                    } else {
+                        // Previous is less than current
+                        addArc(lbc: lbc)
+                    }
+                
+                addLine(ltc: ltc)
+                addArc(ltc: ltc)
                 
             } else {
-                print("ElSE triggered!")
-                if let previousLine = previousLine {
-                    // Previous line bigger than current
-                    print("Previous line bigger than middle")
-                    if previousLine["ltc"]!.x < lbc.x {
-                        strokePath.addLine(to: CGPoint(x: lbc.x - cornerRadius, y: lbc.y))
-                        strokePath.addArc(withCenter: CGPoint(x: lbc.x - cornerRadius,
-                                                              y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: 0, clockwise: false)
-                        
-                    } else {
-                        print("Previous line is less than middle")
-                        strokePath.addLine(to: CGPoint(x:lbc.x + cornerRadius, y: lbc.y))
-                        strokePath.addArc(withCenter: CGPoint(x:lbc.x + cornerRadius, y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: (2 * Double.pi) / 4, endAngle: Double.pi, clockwise: true)
-                    }
-                }
                 
-                if let nextLine = nextLine {
-                    if nextLine["ltc"]!.x < ltc.x {
-                        strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
-                        strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius, y: ltc.y + cornerRadius), radius: cornerRadius , startAngle: 0, endAngle: (3 * Double.pi) / 2, clockwise: false)
+                guard let previousLine: [String : CGPoint] = previousLine else { return }
+                    
+addLine(lbc: lbc)
+
+                    if previousLine["ltc"]!.x < lbc.x {
+                        // Previous line bigger than current
+                        
+                        addArc(lbc: lbc, currentGreater: false)
                         
                     } else {
-                        strokePath.addLine(to: ltc)
-                        strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
-                                                              y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
+                        // Previous line is less than current
+                        addArc(lbc: lbc)
                     }
-                }
+                
+                guard let nextLine = nextLine else { return }
+
+                    addLine(ltc: ltc)
+
+                    if nextLine["ltc"]!.x < ltc.x {
+                        // Next line is greater than current
+                        addArc(ltc: ltc, currentGreater: false)
+                        
+                    } else {
+                        // Next luine is less than current
+                        addArc(ltc: ltc)
+                    }
             }
             c -= 1
         }
@@ -327,7 +322,7 @@ class IPNSLayoutManager: NSLayoutManager {
                                                   y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi / 2), endAngle: CGFloat(Double.pi), clockwise: true)
         } else {
             strokePath.addArc(withCenter: CGPoint(x: lbc.x - cornerRadius,
-                                                  y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(2 * Double.pi / 4), endAngle: CGFloat(Double.pi), clockwise: false)
+                                                  y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(2 * Double.pi / 4), endAngle: 0, clockwise: false)
         }
     }
     
@@ -340,8 +335,8 @@ class IPNSLayoutManager: NSLayoutManager {
             strokePath.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
                                                   y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
         } else {
-            strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius,
-                                                  y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: CGFloat(2 * Double.pi), clockwise: false)
+            strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius, 
+                                                  y: ltc.y + cornerRadius), radius: cornerRadius , startAngle: 0, endAngle: (3 * Double.pi) / 2, clockwise: false)
         }
     }
 }
