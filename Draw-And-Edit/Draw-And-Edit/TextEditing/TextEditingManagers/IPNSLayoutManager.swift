@@ -288,8 +288,12 @@ class IPNSLayoutManager: NSLayoutManager {
 // MARK: Lines and Arc drawing
 extension IPNSLayoutManager {
     
-    func addLine(rtc: CGPoint) {
-        strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
+    func addLine(rtc: CGPoint, withoutOffSet: Bool = false) {
+        if withoutOffSet {
+            strokePath.addLine(to: rtc)
+        } else {
+            strokePath.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
+        }
     }
     
     func addArc(rtc: CGPoint, currentGreater: Bool = true) {
@@ -302,8 +306,12 @@ extension IPNSLayoutManager {
         }
     }
     
-    func addLine(rbc: CGPoint) {
-        strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
+    func addLine(rbc: CGPoint, withoutOffSet: Bool = false) {
+        if withoutOffSet {
+            strokePath.addLine(to: rbc)
+        } else {
+            strokePath.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
+        }
     }
     
     func addArc(rbc: CGPoint, currentGreater: Bool = true) {
@@ -316,8 +324,12 @@ extension IPNSLayoutManager {
         }
     }
     
-    func addLine(lbc: CGPoint) {
-        strokePath.addLine(to: CGPoint(x: lbc.x + cornerRadius, y: lbc.y))
+    func addLine(lbc: CGPoint, withoutOffSet: Bool = false) {
+        if withoutOffSet {
+            strokePath.addLine(to: lbc)
+        } else {
+            strokePath.addLine(to: CGPoint(x: lbc.x + cornerRadius, y: lbc.y))
+        }
     }
     
     func addArc(lbc: CGPoint, currentGreater: Bool = true) {
@@ -330,8 +342,12 @@ extension IPNSLayoutManager {
         }
     }
     
-    func addLine(ltc: CGPoint) {
-        strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
+    func addLine(ltc: CGPoint, withoutOffSet: Bool = false) {
+        if withoutOffSet {
+            strokePath.addLine(to: ltc)
+        } else {
+            strokePath.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
+        }
     }
     
     func addArc(ltc: CGPoint, currentGreater: Bool = true) {
@@ -342,5 +358,9 @@ extension IPNSLayoutManager {
             strokePath.addArc(withCenter: CGPoint(x: ltc.x - cornerRadius,
                                                   y: ltc.y + cornerRadius), radius: cornerRadius , startAngle: 0, endAngle: (3 * Double.pi) / 2, clockwise: false)
         }
+    }
+
+    func difference(between first: CGPoint, and second: CGPoint) -> CGFloat {
+        return first.x - second.x
     }
 }
