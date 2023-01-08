@@ -89,7 +89,7 @@ class IPNSLayoutManager: NSLayoutManager {
         let numberOfLines = strokePoints.count
         
         for i: Int in 0..<numberOfLines {
-            let currentLine: [String : CGPoint]? = strokePoints[i]
+            var currentLine: [String : CGPoint]? = strokePoints[i]
             
             guard var ltc: CGPoint = currentLine?["ltc"],
                   var rtc: CGPoint = currentLine?["rtc"],
@@ -127,18 +127,66 @@ class IPNSLayoutManager: NSLayoutManager {
                 // MARK: The first line/rectangle
                 if i == 0 {
                     guard let nextLine: [String : CGPoint] = nextLine else { return }
-                    addLine(rtc: rtc)
-                    addArc(rtc: rtc)
                     
-                    addLine(rbc: rbc)
+                    var maxX: CGFloat = max(rtc.x, nextLine["rtc"]!.x)
+                    let minX: CGFloat = min(rtc.x, nextLine["rtc"]!.x)
                     
-                    if nextLine["rtc"]!.x < rtc.x {
-                        // From top the left (corner inside)
-                        addArc(rbc: rbc)
+                    // iterate through all lines to get maxX that conforms to difference < maxX * 0.1 and
+                    // is valid for next lines between current and those line that possess maxX
+                    
+                outerLoop: for strokePoint in strokePoints {
+                    if strokePoint.value["rtc"]!.x > maxX {
+                        if strokePoint.value["rtc"]!.x - minX < strokePoint.value["rtc"]!.x * 0.1 {
+                            
+                            var lineBetweenMinAndMaxIndex = i
+                            
+                            while lineBetweenMinAndMaxIndex < strokePoint.key {
+                                if let lineBetweenMinAndMax: [String : CGPoint] = strokePoints[i + 1] {
+                                    
+                                    if strokePoint.value["rtc"]!.x - lineBetweenMinAndMax["rtc"]!.x <= strokePoint.value["rtc"]!.x * 0.1 {
+                                        if lineBetweenMinAndMaxIndex == strokePoint.key - 1 {
+                                            maxX = strokePoint.value["rtc"]!.x
+                                            break outerLoop
+                                        }
+                                        
+                                        lineBetweenMinAndMaxIndex += 1
+                                    } else {
+                                        break outerLoop
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                    
+                    if maxX - minX < maxX * 0.10 {
                         
-                    } else if nextLine["rtc"]!.x > rtc.x {
-                        // From top to the right (corner outside)
-                        addArc(rbc: rbc, currentGreater: false)
+                        rtc.x = maxX
+                        rbc.x = maxX
+                        
+                        // currentLine?["rtc"] = rtc
+                        // currentLine?["rbc"] = rbc
+                        // strokePoints[i] = currentLine
+                        
+                        addLine(rtc: rtc)
+                        addArc(rtc: rtc)
+                        
+                        addLine(rbc: rbc, withoutOffSet: true)
+                    } else {
+                        addLine(rtc: rtc)
+                        addArc(rtc: rtc)
+                        
+                        addLine(rbc: rbc)
+                        
+                        if nextLine["rtc"]!.x < rtc.x {
+                            // From top the left (corner inside)
+                            addArc(rbc: rbc)
+                            
+                        } else if nextLine["rtc"]!.x > rtc.x {
+                            // From top to the right (corner outside)
+                            addArc(rbc: rbc, currentGreater: false)
+                        }
+                        
                     }
                     
                     // MARK: The last line/rectangle
@@ -146,13 +194,29 @@ class IPNSLayoutManager: NSLayoutManager {
                     
                     guard let previousLine: [String : CGPoint] = previousLine else { return }
                     
-                    addLine(lbc: rtc)
-                    if previousLine["rtc"]!.x > rtc.x {
-                        // From top to the left (corner outside)
-                        addArc(rtc: rtc, currentGreater: false)
+                    let maxX: CGFloat = max(rtc.x, previousLine["rtc"]!.x)
+                    let minX: CGFloat = min(rtc.x, previousLine["rtc"]!.x)
+                    
+                    let difference: CGFloat = maxX - minX
+                    
+                    if difference < maxX * 0.10 {
+                        
+                        rtc.x = maxX
+                        rbc.x = maxX
+                        
+                        addLine(rtc: rtc, withoutOffSet: true)
+                        
                     } else {
-                        // From top to the rigth (corner outside)
-                        addArc(rtc: rtc)
+                        
+                        addLine(rtc: rtc)
+                        if previousLine["rtc"]!.x > rtc.x {
+                            // From top to the left (corner outside)
+                            addArc(rtc: rtc, currentGreater: false)
+                        } else {
+                            // From top to the rigth (corner outside)
+                            addArc(rtc: rtc)
+                        }
+                        
                     }
                     
                     addLine(rbc: rbc)
