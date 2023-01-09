@@ -92,8 +92,18 @@ final class Draw_And_EditUITests: XCTestCase {
         XCTAssertTrue(textView.exists, "Text View was not found.")
         
         textView.tap()
+        
+        var c = 0
+        
+        let deleteKey = app.keys["delete"]
+        // TODO: Find a better way to know exact amount of characters in text views.
+        while c < 12 {
+            deleteKey.tap()
+            c += 1
+        }
+        
         textView.typeText("""
-        few lines
+        FEW lines
         of text will be added.
         """)
         // A button will be found only if seeking button has provided accessibility identifier
