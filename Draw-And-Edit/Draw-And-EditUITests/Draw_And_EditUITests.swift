@@ -56,6 +56,24 @@ final class Draw_And_EditUITests: XCTestCase {
         let textView = app.textViews["text"]
         XCTAssertTrue(textView.exists, "Text View was not found.")
     }
+    
+    func testTextViewUsability() throws {
+        app.launch()
+        
+        let addButton = app.buttons["add"]
+        XCTAssertTrue(addButton.exists, "add button was not found")
+        
+        addButton.tap()
+
+        let textView = app.textViews.element
+        
+        textView.typeText("Hello World")
+
+        let doneButton = app.buttons["Done"]
+        XCTAssertTrue(doneButton.exists, "Done button was not found")
+        
+        XCTAssertTrue(textView.exists, "Text View was not found.")
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

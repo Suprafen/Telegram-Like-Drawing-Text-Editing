@@ -354,7 +354,7 @@ extension IPMapViewController {
         }()
         
         let localTextStorage: IPNSTextStorage = {
-            let attrStr = NSAttributedString(string: "text", attributes: [.font : UIFont(name: "Helvetica-Bold", size: 35)!])
+            let attrStr = NSAttributedString(string: " ", attributes: [.font : UIFont(name: "Helvetica-Bold", size: 35)!])
             
             let textStorage = IPNSTextStorage()
             
