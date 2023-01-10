@@ -42,7 +42,7 @@ class IPMapViewController: UIViewController {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.addTarget(nil, action: #selector(addNewTextView), for: .touchUpInside)
-        
+        button.accessibilityIdentifier = "addNewTextViewButton"
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -53,7 +53,8 @@ class IPMapViewController: UIViewController {
         button.setTitle("Done", for: .normal)
         button.isHidden = true
         button.addTarget(nil, action: #selector(doneButtonTapped), for: .touchUpInside)
-        
+        button.accessibilityIdentifier = "doneButton"
+
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -94,10 +95,10 @@ class IPMapViewController: UIViewController {
 
         let button = UIButton()
         button.setImage(image, for: .normal)
-//        button.tintColor = .black
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(nil, action: #selector(alignmentChangeBarButtonTapped), for: .touchUpInside)
-        
+        button.accessibilityIdentifier = "alignmentChangeButton"
+
         return button
     }()
     
@@ -108,6 +109,7 @@ class IPMapViewController: UIViewController {
         button.setImage(image, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(nil, action: #selector(fillChangeBarButtonTapped), for: .touchUpInside)
+        button.accessibilityIdentifier = "fillStateChangeButton"
         
         return button
     }()
@@ -125,6 +127,7 @@ class IPMapViewController: UIViewController {
         slider.maximumValue = 70
         slider.isHidden = true
         slider.addTarget(nil, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
+        slider.accessibilityIdentifier = "fontSizeSlider"
 
         return slider
         
@@ -252,6 +255,7 @@ class IPMapViewController: UIViewController {
         
         collectionController.collectionView!.translatesAutoresizingMaskIntoConstraints = false
         collectionController.view.backgroundColor = .orange
+        collectionController.collectionView.accessibilityIdentifier = "availableFontsCollectionView"
         
         self.addChild(collectionController)
         collectionController.didMove(toParent: self)

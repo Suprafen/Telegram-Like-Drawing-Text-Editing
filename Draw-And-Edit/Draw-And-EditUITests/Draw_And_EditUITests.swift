@@ -29,7 +29,7 @@ final class Draw_And_EditUITests: XCTestCase {
         
         app.launch()
 
-        let addButton = app.buttons["add"]
+        let addButton = app.buttons["addNewTextViewButton"]
         XCTAssertTrue(addButton.exists, "add button was not found")
 
         addButton.tap()
@@ -60,7 +60,7 @@ final class Draw_And_EditUITests: XCTestCase {
     func testTextViewUsability() throws {
         app.launch()
         
-        let addButton = app.buttons["add"]
+        let addButton = app.buttons["addNewTextViewButton"]
         XCTAssertTrue(addButton.exists, "add button was not found")
         
         addButton.tap()
@@ -78,7 +78,7 @@ final class Draw_And_EditUITests: XCTestCase {
     func testTextViewEditing() throws {
         app.launch()
         
-        let addButton = app.buttons["add"]
+        let addButton = app.buttons["addNewTextViewButton"]
         XCTAssertTrue(addButton.exists, "add button was not found")
         
         addButton.tap()
@@ -126,6 +126,44 @@ final class Draw_And_EditUITests: XCTestCase {
         doneButton.tap()
     }
     
+    func testTextViewDragability() throws {
+        app.launch()
+
+        let addButton = app.buttons["addNewTextViewButton"]
+        XCTAssertTrue(addButton.exists, "add button was not found")
+
+        addButton.tap()
+
+        let textView = app.textViews.element
+        XCTAssertTrue(textView.exists, "Text View was not found.")
+
+        textView.tap()
+
+        textView.typeText("""
+        Hello Wrold. 
+        And couple of other words.
+        """)
+        
+        let fontSizeSlider = app.sliders["fontSizeSlider"]
+        XCTAssertTrue(fontSizeSlider.exists, "fontSizeSlider was not found.")
+        
+        fontSizeSlider.adjust(toNormalizedSliderPosition: 0)
+        fontSizeSlider.adjust(toNormalizedSliderPosition: 1)
+        
+        let availableFontsCollectionView = app.collectionViews["availableFontsCollectionView"]
+        XCTAssertTrue(availableFontsCollectionView.exists, "availableFontsCollectionView was not found.")
+        
+        availableFontsCollectionView.cells.element(boundBy: 1).tap()
+        availableFontsCollectionView.swipeLeft()
+        
+        let doneButton = app.buttons["doneButton"]
+        XCTAssertTrue(doneButton.exists, "Done button was not found")
+
+        doneButton.tap()
+        
+        textView.press(forDuration: 0.1, thenDragTo: addButton)
+    }
+
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
