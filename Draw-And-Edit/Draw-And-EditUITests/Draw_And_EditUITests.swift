@@ -86,9 +86,6 @@ final class Draw_And_EditUITests: XCTestCase {
         let textView = app.textViews.element
         
         textView.typeText("Hello World")
-
-        let doneButton = app.buttons["Done"]
-        XCTAssertTrue(doneButton.exists, "Done button was not found")
         XCTAssertTrue(textView.exists, "Text View was not found.")
         
         textView.tap()
@@ -108,9 +105,25 @@ final class Draw_And_EditUITests: XCTestCase {
         """)
         // A button will be found only if seeking button has provided accessibility identifier
         let fillChangeButton = app.buttons["fillStateChangeButton"]
-        XCTAssertTrue(fillChangeButton.exists)
+        XCTAssertTrue(fillChangeButton.exists, "fillStateChangeButton was not found.")
         
         fillChangeButton.tap()
+
+        let alignmentChangeButton = app.buttons["alignmentChangeButton"]
+        XCTAssertTrue(alignmentChangeButton.exists, "alignmentChangeButton was not found.")
+
+        alignmentChangeButton.tap()
+        alignmentChangeButton.tap()
+
+        let fontSizeSlider = app.sliders["fontSizeSlider"]
+        XCTAssertTrue(fontSizeSlider.exists, "fontSizeSlider was not found.")
+
+        fontSizeSlider.adjust(toNormalizedSliderPosition: 1)
+
+        let doneButton = app.buttons["Done"]
+        XCTAssertTrue(doneButton.exists, "Done button was not found")
+        
+        doneButton.tap()
     }
     
     func testLaunchPerformance() throws {
