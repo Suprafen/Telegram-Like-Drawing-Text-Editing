@@ -36,6 +36,8 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         
         configureDataSource()
         
+        collectionView.backgroundColor = .clear
+        
         collectionView.register(IPAvailableFontCollectionViewCell.self,
                                 forCellWithReuseIdentifier: IPAvailableFontCollectionViewCell.reuseIdentifier)
         
@@ -48,7 +50,8 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
         let cell = collectionView.cellForItem(at: indexPath)!
         
         cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 2
+        cell.layer.borderWidth = 0.7
+        cell.layer.borderColor = UIColor.white.cgColor
         
         let index = indexPath.item
         
@@ -64,7 +67,7 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
     
     // MARK: - Helper methods
     func createLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(0.9))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
@@ -91,8 +94,9 @@ class IPAvailableFontsCollectionViewController: UICollectionViewController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: IPAvailableFontCollectionViewCell.reuseIdentifier, for: indexPath) as! IPAvailableFontCollectionViewCell
             
             cell.configure(withItem: item)
+            
             cell.layer.cornerRadius = 10
-            cell.layer.borderWidth = 1
+            cell.layer.borderWidth = 0.7
             cell.layer.borderColor = UIColor.systemGray.withAlphaComponent(0.7).cgColor
             
             return cell

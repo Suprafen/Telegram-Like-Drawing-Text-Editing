@@ -83,8 +83,15 @@ class IPMapViewController: UIViewController {
     }()
     
     let toolbar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGray6
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        
+        let blurView = UIVisualEffectView(effect: nil)
+        
+        blurView.effect = UIBlurEffect(style: .dark)
+        
+        blurView.frame = view.frame
+        
+        view.addSubview(blurView)
         
         return view
     }()
@@ -251,7 +258,6 @@ class IPMapViewController: UIViewController {
     }
     
     func setupToolbar() {
-        toolbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
         
         collectionController.collectionView!.translatesAutoresizingMaskIntoConstraints = false
         collectionController.view.backgroundColor = .orange

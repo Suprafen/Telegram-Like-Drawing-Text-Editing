@@ -10,7 +10,7 @@ import UIKit
 
 class IPAvailableFontsStorage {
     
-    static let standardFontSize: CGFloat = 20
+    static let standardFontSize: CGFloat = 15
     
     var availableFonts: [IPFont] = [
         IPFont(font: UIFont(name: fontName.HelveticaNeue_Bold.rawValue,
