@@ -23,6 +23,8 @@ class IPSliderView: UISlider {
     
     var sFrame: CGRect
     
+    var delegate: IPSliderDelegate?
+    
     override func draw(_ rect: CGRect) {
         
         super.draw(rect)
@@ -57,6 +59,7 @@ class IPSliderView: UISlider {
     
     private func buildBaseLayer() {
         baseLayer.fillColor = UIColor.lightGray.cgColor
+        baseLayer.borderColor = UIColor.lightGray.cgColor
         baseLayer.path = createBackground(rect: sFrame).cgPath
         
         layer.insertSublayer(baseLayer, at: 0)
@@ -122,5 +125,17 @@ class IPSliderView: UISlider {
         path.fill()
 
         return path
+    }
+    
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        super.beginTracking(touch, with: event)
+        delegate?.touchesBegan()
+        
+        return true
+    }
+    
+    override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+        super.endTracking(touch, with: event)
+        delegate?.touchesEnded()
     }
 }

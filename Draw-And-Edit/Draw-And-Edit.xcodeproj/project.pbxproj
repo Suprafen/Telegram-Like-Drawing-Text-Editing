@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CCE122914436800020C22 /* IPUIViewExtension.swift */; };
 		E230B02829709FC800F9A628 /* DifferentUsefulValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E230B02729709FC800F9A628 /* DifferentUsefulValues.swift */; };
+		E230B02B2970B53600F9A628 /* IPSliderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E230B02A2970B53600F9A628 /* IPSliderDelegate.swift */; };
 		E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84429298BB100854E53 /* IPTextFillState.swift */; };
 		E25BE84729298C0400854E53 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84629298C0400854E53 /* AppStateController.swift */; };
 		E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		E20CCE122914436800020C22 /* IPUIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPUIViewExtension.swift; sourceTree = "<group>"; };
 		E230B02729709FC800F9A628 /* DifferentUsefulValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifferentUsefulValues.swift; sourceTree = "<group>"; };
+		E230B02A2970B53600F9A628 /* IPSliderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPSliderDelegate.swift; sourceTree = "<group>"; };
 		E25BE84429298BB100854E53 /* IPTextFillState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextFillState.swift; sourceTree = "<group>"; };
 		E25BE84629298C0400854E53 /* AppStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextAlignmentState.swift; sourceTree = "<group>"; };
@@ -105,6 +107,15 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		E230B0292970B51D00F9A628 /* IPSliderView */ = {
+			isa = PBXGroup;
+			children = (
+				E28F792B29439C9A00754C46 /* IPSliderView.swift */,
+				E230B02A2970B53600F9A628 /* IPSliderDelegate.swift */,
+			);
+			path = IPSliderView;
+			sourceTree = "<group>";
+		};
 		E27C448D29329F6B0024D7C6 /* AvailableFontsCollection */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +138,7 @@
 		E28F792A29439C6800754C46 /* ReusableElements */ = {
 			isa = PBXGroup;
 			children = (
-				E28F792B29439C9A00754C46 /* IPSliderView.swift */,
+				E230B0292970B51D00F9A628 /* IPSliderView */,
 			);
 			path = ReusableElements;
 			sourceTree = "<group>";
@@ -344,6 +355,7 @@
 				E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */,
 				E2CF58E42944889700B5C181 /* ViewToImageExtension.swift in Sources */,
 				E2F6E4042939528D00E65DAB /* IPNSLayoutManager.swift in Sources */,
+				E230B02B2970B53600F9A628 /* IPSliderDelegate.swift in Sources */,
 				E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */,
 				E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */,
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,

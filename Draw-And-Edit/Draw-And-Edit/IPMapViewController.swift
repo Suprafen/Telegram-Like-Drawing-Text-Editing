@@ -293,8 +293,10 @@ class IPMapViewController: UIViewController {
         self.view.addSubview(fontSizeSlider)
         
         fontSizeSlider.center = CGPoint(x: -fontSizeSlider.sFrame.maxY, y: fourthsOfTheScreenFromAbove)
-//        sender.center = CGPoint(x: 20, y: (view.frame.minY + view.frame.maxY) / 2)
+        
         fontSizeSlider.transform = CGAffineTransform(rotationAngle: (.pi * 3) / 2)
+        
+        fontSizeSlider.delegate = self
         
         NSLayoutConstraint.activate([
             backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -568,7 +570,6 @@ extension IPMapViewController {
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        let center = fontSizeSlider.center
         
         fontSizeSlider.center = CGPoint(x: -(fontSizeSlider.bounds.maxY / 2), y: fourthsOfTheScreenFromAbove)
         
@@ -586,7 +587,6 @@ extension IPMapViewController {
         
         isEditingActive = false
     }
-    
     
     @objc func viewMoved(_ sender: UIPanGestureRecognizer) {
         
@@ -691,4 +691,18 @@ extension IPMapViewController: NSLayoutManagerDelegate {
 //        return 10.0
 //    }
 //    
+}
+
+extension IPMapViewController: IPSliderDelegate {
+    func touchesEnded() {
+        UIView.animate(withDuration: 0.3) {
+            self.fontSizeSlider.center = CGPoint(x: 0, y: fourthsOfTheScreenFromAbove)
+        }
+    }
+    
+    func touchesBegan() {
+        UIView.animate(withDuration: 0.3) {
+            self.fontSizeSlider.center = CGPoint(x: self.fontSizeSlider.sFrame.maxY - self.fontSizeSlider.sFrame.maxY * 0.2, y: fourthsOfTheScreenFromAbove)
+        }
+    }
 }
