@@ -6,12 +6,8 @@
 //
 
 import UIKit
-//MARK: IMPORTANT TASKS
-// From the most to the least important
 
 class IPMapViewController: UIViewController {
-    
-    //TODO: Maybe put that stuff to the separate class
     
     var textContainer: NSTextContainer = {
         let textContainer = NSTextContainer(size: .zero)
@@ -132,7 +128,7 @@ class IPMapViewController: UIViewController {
         slider.minimumValue = 30
         slider.value = 35
         slider.maximumValue = 70
-        slider.isHidden = true
+        
         slider.addTarget(nil, action: #selector(fontSizeSliderValueChanged(_:)), for: .valueChanged)
         slider.accessibilityIdentifier = "fontSizeSlider"
 
@@ -296,13 +292,9 @@ class IPMapViewController: UIViewController {
         self.view.addSubview(cancelButton)
         self.view.addSubview(fontSizeSlider)
         
-        // Center location for font size slider
-        // default value
-        fontSizeSlider.frame.origin = CGPoint(x: -fontSizeSlider.sFrame.maxX, y: (view.frame.minY + view.frame.maxY) / 2)
-        // The value when pangesture is active
+        fontSizeSlider.center = CGPoint(x: -fontSizeSlider.sFrame.maxY, y: fourthsOfTheScreenFromAbove)
 //        sender.center = CGPoint(x: 20, y: (view.frame.minY + view.frame.maxY) / 2)
         fontSizeSlider.transform = CGAffineTransform(rotationAngle: (.pi * 3) / 2)
-        
         
         NSLayoutConstraint.activate([
             backgroundDarknerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -378,11 +370,13 @@ extension IPMapViewController {
         localLayoutManager.addTextContainer(locaTextContainer)
         localTextStorage.addLayoutManager(localLayoutManager)
         
-        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: maxTextViewFrameWidth,
-                                                height: 150), textContainer: locaTextContainer)
+        let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 60,
+                                                height: 50), textContainer: locaTextContainer)
        
         textView.inputAccessoryView = toolbar
         
+        textView.text = ""
+
         textView.backgroundColor = .blue.withAlphaComponent(0.3)
         
         textView.isScrollEnabled = false
@@ -492,8 +486,6 @@ extension IPMapViewController {
         
         appStateController.changeAlignmentState()
         
-        let imageName: String
-        
         switch appStateController.alignment {
             
         case .left:
@@ -561,33 +553,25 @@ extension IPMapViewController {
         
         guard !isEditingActive else { return }
         
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let _ = keyboardRectangle.height // keyboard height
-            
-            correctToolbarButtonsImages()
-
-            let keyboardOrigin = keyboardRectangle.origin
-            
-            fontSizeSlider.center = CGPoint(x: 0, y: keyboardOrigin.y - fontSizeSlider.frame.minY / 2)
-            
-            guard let textView = view.firstResponder else { return }
-            
-            referenceTextViewCenterPoint = textView.center
-            
-            textView.center = view.center
-            
-            isEditingActive = true
-            
-        }
+        correctToolbarButtonsImages()
+        
+        fontSizeSlider.center = CGPoint(x: 0, y: fourthsOfTheScreenFromAbove)
+        
+        guard let textView = view.firstResponder else { return }
+        
+        referenceTextViewCenterPoint = textView.center
+        
+        textView.center = view.center
+        
+        isEditingActive = true
+        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
         let center = fontSizeSlider.center
         
-        fontSizeSlider.center = CGPoint(x: -fontSizeSlider.frame.maxY, y: center.y)
-        // Maybe this code is redundant because there's
-        // no way frame will be bigger than content size.
+        fontSizeSlider.center = CGPoint(x: -(fontSizeSlider.bounds.maxY / 2), y: fourthsOfTheScreenFromAbove)
+        
         guard let textView = view.firstResponder as? IPTextView else { return }
         
         let contentSize = textView.contentSize

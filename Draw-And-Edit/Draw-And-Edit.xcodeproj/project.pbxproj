@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CCE122914436800020C22 /* IPUIViewExtension.swift */; };
+		E230B02829709FC800F9A628 /* DifferentUsefulValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E230B02729709FC800F9A628 /* DifferentUsefulValues.swift */; };
 		E25BE84529298BB100854E53 /* IPTextFillState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84429298BB100854E53 /* IPTextFillState.swift */; };
 		E25BE84729298C0400854E53 /* AppStateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE84629298C0400854E53 /* AppStateController.swift */; };
 		E25BE849292994AB00854E53 /* IPTextAlignmentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		E20CCE122914436800020C22 /* IPUIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPUIViewExtension.swift; sourceTree = "<group>"; };
+		E230B02729709FC800F9A628 /* DifferentUsefulValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifferentUsefulValues.swift; sourceTree = "<group>"; };
 		E25BE84429298BB100854E53 /* IPTextFillState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextFillState.swift; sourceTree = "<group>"; };
 		E25BE84629298C0400854E53 /* AppStateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateController.swift; sourceTree = "<group>"; };
 		E25BE848292994AB00854E53 /* IPTextAlignmentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextAlignmentState.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				E2A6FF50292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift */,
 				E2CF58E32944889700B5C181 /* ViewToImageExtension.swift */,
 				E27C7B51294546560005C5F9 /* WidthToDimension.swift */,
+				E230B02729709FC800F9A628 /* DifferentUsefulValues.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				E2A6FF51292AC2D100C72421 /* AddRemoveUIViewControllerExtension.swift in Sources */,
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
+				E230B02829709FC800F9A628 /* DifferentUsefulValues.swift in Sources */,
 				E2AA5C752939DA6300E26497 /* IPNSTextStorage.swift in Sources */,
 				E2A6FF4B292A84EC00C72421 /* IPFont.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
