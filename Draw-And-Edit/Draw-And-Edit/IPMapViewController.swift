@@ -511,12 +511,15 @@ extension IPMapViewController {
     @objc func fontSizeSliderValueChanged(_ sender: UISlider) {
         // TODO: Fix this awfulness
         // Make a property instead and wake layout manager to do the job
-        
         guard let textView = view.firstResponder as? IPTextView,
               let currentText = textView.text else {
             print("1st responder or current text has fucked up! - fontSizeSliderValueChanged")
             return
         }
+        textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.contentSize.height)
+        
+//        textView.center = view.center
+//        textView.sizeToFit()
         
         let currentTextStorage = textView.textStorage
         
@@ -647,12 +650,12 @@ extension IPMapViewController: IPAvailableFontsCollectionViewControllerDelegate 
 extension IPMapViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.frame.size.width == maxTextViewFrameWidth {
-            textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
-        } else {
-            textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
-        }
+        
+        textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
+        
         textView.sizeToFit()
+        
+        textView.center = view.center
         
         guard let currentText = textView.text,
               !currentText.isEmpty,
