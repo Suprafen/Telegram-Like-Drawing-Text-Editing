@@ -374,12 +374,14 @@ extension IPMapViewController {
         
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 60,
                                                 height: 50), textContainer: locaTextContainer)
-       
+        
         textView.inputAccessoryView = toolbar
         
         textView.text = ""
-
-        textView.backgroundColor = .blue.withAlphaComponent(0.3)
+        
+        textView.contentMode = .redraw
+        
+        textView.backgroundColor = .clear
         
         textView.isScrollEnabled = false
         
@@ -516,10 +518,19 @@ extension IPMapViewController {
             print("1st responder or current text has fucked up! - fontSizeSliderValueChanged")
             return
         }
-        textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.contentSize.height)
-        
-//        textView.center = view.center
-//        textView.sizeToFit()
+        // Current implementation cause text glitching
+        // when slider value is get increased
+        if (textView.frame.width > view.bounds.width * 0.8){
+            
+            textView.frame.size.height = textView.contentSize.height
+            textView.frame.size.width = view.bounds.width * 0.8
+            
+        }else {
+            //This line, well maybe not this exactly, but with help of which
+            // Text is going to be shrinked horizontaly but layout properly vertically
+            textView.frame.size = CGSize(width: maxTextViewFrameWidth, height: textView.frame.size.height)
+            textView.sizeToFit()
+        }
         
         let currentTextStorage = textView.textStorage
         
@@ -546,11 +557,6 @@ extension IPMapViewController {
         font = font.withSize(CGFloat(fontSize))
         
         currentTextStorage.addAttributes([.font : font], range: convertedRange)
-        // Control text view's frame during font changings
-        
-        textView.frame.size = CGSize(width: 0, height: textView.frame.size.height)
-        
-        textView.sizeToFit()
 
     }
     
@@ -689,11 +695,11 @@ extension IPMapViewController: NSLayoutManagerDelegate {
 //    func layoutManager(_ layoutManager: NSLayoutManager, lineSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
 //        return 10.0
 //    }
-//    
+//
 //    func layoutManager(_ layoutManager: NSLayoutManager, paragraphSpacingAfterGlyphAt glyphIndex: Int, withProposedLineFragmentRect rect: CGRect) -> CGFloat {
 //        return 10.0
 //    }
-//    
+//
 }
 
 extension IPMapViewController: IPSliderDelegate {
