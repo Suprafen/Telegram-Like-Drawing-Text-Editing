@@ -594,6 +594,8 @@ extension IPMapViewController {
         
         textView.center = referenceTextViewCenterPoint
         
+        textView.showBorderWithCircles()
+
         isEditingActive = false
     }
     
@@ -713,5 +715,45 @@ extension IPMapViewController: IPSliderDelegate {
         UIView.animate(withDuration: 0.3) {
             self.fontSizeSlider.center = CGPoint(x: self.fontSizeSlider.sFrame.maxY - self.fontSizeSlider.sFrame.maxY * 0.2, y: fourthsOfTheScreenFromAbove)
         }
+    }
+}
+
+// MARK: - BEZIER PATH FOR TEXTVIEW'S BORDER
+extension UIBezierPath {
+    
+    func addLine(rtc: CGPoint, cornerRadius: CGFloat) {
+        self.addLine(to: CGPoint(x: rtc.x - cornerRadius, y: rtc.y))
+    }
+    
+    func addArc(rtc: CGPoint, cornerRadius: CGFloat) {
+        self.addArc(withCenter: CGPoint(x: rtc.x - cornerRadius,
+                                                  y: rtc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(3 * Double.pi / 2), endAngle: 0, clockwise: true)
+    }
+    
+    func addLine(rbc: CGPoint, cornerRadius: CGFloat) {
+        self.addLine(to: CGPoint(x: rbc.x, y: rbc.y - cornerRadius))
+    }
+    
+    func addArc(rbc: CGPoint, cornerRadius: CGFloat) {
+            self.addArc(withCenter: CGPoint(x: rbc.x - cornerRadius,
+                                                  y: rbc.y - cornerRadius), radius: cornerRadius, startAngle: 0, endAngle: CGFloat(Double.pi / 2), clockwise: true)
+    }
+    
+    func addLine(lbc: CGPoint, cornerRadius: CGFloat) {
+        self.addLine(to: CGPoint(x: lbc.x + cornerRadius, y: lbc.y))
+    }
+    
+    func addArc(lbc: CGPoint, cornerRadius: CGFloat) {
+        self.addArc(withCenter: CGPoint(x: lbc.x + cornerRadius,
+                                                  y: lbc.y - cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi / 2), endAngle: CGFloat(Double.pi), clockwise: true)
+    }
+    
+    func addLine(ltc: CGPoint, cornerRadius: CGFloat) {
+        self.addLine(to: CGPoint(x: ltc.x, y: ltc.y + cornerRadius))
+    }
+    
+    func addArc(ltc: CGPoint, cornerRadius: CGFloat) {
+        self.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
+                                                  y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
     }
 }
