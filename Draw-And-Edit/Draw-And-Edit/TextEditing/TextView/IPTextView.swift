@@ -51,41 +51,25 @@ extension IPTextView {
         }
 
         private func setupCALayer() {
-
-            drawBorder()
+            self.backgroundColor = .systemOrange
+            
             let borderLayer = CAShapeLayer()
-            borderLayer.path = controlPath.cgPath
+            let pth = drawBorder()
+            borderLayer.path = pth.cgPath
+            borderLayer.lineWidth = 4
             borderLayer.strokeColor = UIColor.black.cgColor
             borderLayer.fillColor = UIColor.clear.cgColor
-//            borderLayer.lineWidth = 5
-            self.layer.addSublayer(borderLayer)
 
+            self.layer.addSublayer(borderLayer)
+            borderLayer.position = CGPoint(x: 4, y: 4)
         }
         
-        private func drawBorder() {
+        private func drawBorder() -> UIBezierPath {
+            let rect: CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.frame.width - 8, height: self.frame.height - 8))
             
-            let rect: CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.bounds.width, height: self.bounds.height))
-            let points: (ltc: CGPoint, rtc: CGPoint, lbc: CGPoint, rbc: CGPoint) = self.getPointsFrom(rect: rect)
-            
-            controlPath.removeAllPoints()
-            let cornerRadius: CGFloat = 10
-            controlPath.move(to: CGPoint(x: points.ltc.x + cornerRadius, y: 0))
-            
-            controlPath.addLine(rtc: points.rtc, cornerRadius: cornerRadius)
-            controlPath.addArc(rtc: points.rtc, cornerRadius: cornerRadius)
-            controlPath.addLine(rbc: points.rbc, cornerRadius: cornerRadius)
-            controlPath.addArc(rbc: points.rbc, cornerRadius: cornerRadius)
-            controlPath.addLine(lbc: points.lbc, cornerRadius: cornerRadius)
-            controlPath.addArc(lbc: points.lbc, cornerRadius: cornerRadius)
-            controlPath.addLine(ltc: points.ltc, cornerRadius: cornerRadius)
-            controlPath.addArc(ltc: points.ltc, cornerRadius: cornerRadius)
-            controlPath.close()
-            
-            
-            
-//            UIColor.black.setStroke()
-//            UIColor.clear.setFill()
-            
+            let path = UIBezierPath(roundedRect: rect, cornerRadius: 10)
+            path.stroke()
+            return path
         }
 
         private func drawCircles() {

@@ -594,6 +594,8 @@ extension IPMapViewController {
         
         textView.center = referenceTextViewCenterPoint
         
+//        showBorderWithCircles(aroundTextView: textView)
+        
         textView.showBorderWithCircles()
 
         isEditingActive = false
@@ -755,5 +757,34 @@ extension UIBezierPath {
     func addArc(ltc: CGPoint, cornerRadius: CGFloat) {
         self.addArc(withCenter: CGPoint(x: ltc.x + cornerRadius,
                                                   y: ltc.y + cornerRadius), radius: cornerRadius, startAngle: CGFloat(Double.pi), endAngle: CGFloat(3 * Double.pi / 2), clockwise: true)
+    }
+}
+
+extension IPMapViewController {
+    func showBorderWithCircles(aroundTextView textView: IPTextView) {
+        self.setupCALayer(forTextView: textView)
+        // self.drawCircles()
+    }
+
+    private func setupCALayer(forTextView textView: IPTextView) {
+        
+        let borderLayer = CAShapeLayer()
+        let pth = drawBorder(aroundTextView: textView)
+        borderLayer.path = pth.cgPath
+        borderLayer.lineWidth = 4
+        borderLayer.strokeColor = UIColor.black.cgColor
+        borderLayer.fillColor = UIColor.clear.cgColor
+        
+        view.layer.addSublayer(borderLayer)
+        borderLayer.position = textView.center
+        
+    }
+    
+    private func drawBorder(aroundTextView textView: IPTextView) -> UIBezierPath {
+        let rect: CGRect = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: textView.frame.width - 8, height: textView.frame.height - 8))
+        
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: 10)
+        path.stroke()
+        return path
     }
 }
