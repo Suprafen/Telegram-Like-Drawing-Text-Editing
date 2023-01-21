@@ -109,7 +109,7 @@ class IPNSLayoutManager: NSLayoutManager {
             }
             
             if numberOfLines == 1 {
-                strokePath.move(to: ltc)
+                strokePath.move(to: CGPoint(x: ltc.x + cornerRadius, y: ltc.y))
                 
                 addLine(rtc: rtc)
                 addArc(rtc: rtc)

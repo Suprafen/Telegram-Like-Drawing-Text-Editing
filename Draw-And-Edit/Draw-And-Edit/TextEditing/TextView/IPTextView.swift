@@ -12,7 +12,11 @@ class IPTextView: UITextView {
     // TODO: Refactor IPMapViewController and move the code that responsible for filling to this propperty
     // Make the property computed, obviously
     var textFillState: IPTextFillState = .defaultFill
-
+    
+    var isSelected: Bool = false
+    
+    var ipDelegate: IPTextViewDelegate?
+    
     var textAlignmentState: IPTextAlignmentState = .left {
         didSet {
             switch textAlignmentState {
@@ -34,6 +38,22 @@ class IPTextView: UITextView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        if isSelected {
+            
+            ipDelegate?.removeControlPath()
+            super.becomeFirstResponder()
+            return true
+            
+        } else {
+            
+            isSelected = true
+            ipDelegate?.presentControlPath(forTextView: self)
+            return false
+            
+        }
     }
 }
 // Drawing border related

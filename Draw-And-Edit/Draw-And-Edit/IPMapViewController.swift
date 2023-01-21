@@ -375,6 +375,8 @@ extension IPMapViewController {
         let textView = IPTextView(frame: CGRect(x: 0, y: 0, width: 60,
                                                 height: 50), textContainer: locaTextContainer)
         
+        textView.isSelected = true
+        
         textView.inputAccessoryView = toolbar
         
         textView.text = ""
@@ -391,6 +393,8 @@ extension IPMapViewController {
         
         textView.delegate = self
         
+        textView.ipDelegate = self
+        
         textView.isUserInteractionEnabled = true
         
         let pangestureRecognizer = UIPanGestureRecognizer(target: self,
@@ -399,7 +403,7 @@ extension IPMapViewController {
         
         view.addSubview(textView)
         
-        textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
+        let _ = textView.becomeFirstResponder() // This line helps me to invoke the keyboard when view appears on the screen.
         textView.center = view.center
     }
     
@@ -592,9 +596,9 @@ extension IPMapViewController {
         
         textView.sizeToFit()
         
-        textView.center = referenceTextViewCenterPoint
+        textView.isSelected = false
         
-        showBorderWithCircles(aroundTextView: textView)
+        textView.center = referenceTextViewCenterPoint
 
         isEditingActive = false
     }
@@ -758,22 +762,33 @@ extension UIBezierPath {
     }
 }
 
+extension IPMapViewController: IPTextViewDelegate {
+    func presentControlPath(forTextView textView: IPTextView) {
+        self.setupCALayer(forTextView: textView)
+    }
+    
+    func removeControlPath() {
+        view.layer.sublayers?.filter { $0 is CAShapeLayer }.forEach({ $0.removeFromSuperlayer() })
+    }
+}
+
 extension IPMapViewController {
     func showBorderWithCircles(aroundTextView textView: IPTextView) {
-        self.setupCALayer(forTextView: textView)
+        
         // self.drawCircles()
     }
 
     private func setupCALayer(forTextView textView: IPTextView) {
         
         let borderLayer = CAShapeLayer()
+        borderLayer.name = "borderLayer"
         let pth = drawBorder(aroundTextView: textView)
         borderLayer.path = pth.cgPath
-        borderLayer.lineWidth = 4
+        borderLayer.lineWidth = 2
         borderLayer.strokeColor = UIColor.black.cgColor
         borderLayer.fillColor = UIColor.clear.cgColor
-        
-        view.layer.addSublayer(borderLayer)
+        borderLayer.lineDashPattern = [20, 10]
+        view.layer.insertSublayer(borderLayer, at: 0)
         borderLayer.position = textView.frame.origin
         
     }

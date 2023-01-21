@@ -18,6 +18,7 @@
 		E27F2C7C296C6548001B22A1 /* Draw_And_EditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2C7B296C6548001B22A1 /* Draw_And_EditUITests.swift */; };
 		E27F2C7E296C6548001B22A1 /* Draw_And_EditUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27F2C7D296C6548001B22A1 /* Draw_And_EditUITestsLaunchTests.swift */; };
 		E28F792C29439C9A00754C46 /* IPSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28F792B29439C9A00754C46 /* IPSliderView.swift */; };
+		E29368C2297C943B00856163 /* IPTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29368C1297C943B00856163 /* IPTextViewDelegate.swift */; };
 		E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */; };
 		E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */; };
 		E29FECC5291175BB00F6DDE5 /* IPMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FECC4291175BB00F6DDE5 /* IPMapViewController.swift */; };
@@ -59,6 +60,7 @@
 		E27F2C7B296C6548001B22A1 /* Draw_And_EditUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw_And_EditUITests.swift; sourceTree = "<group>"; };
 		E27F2C7D296C6548001B22A1 /* Draw_And_EditUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw_And_EditUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E28F792B29439C9A00754C46 /* IPSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPSliderView.swift; sourceTree = "<group>"; };
+		E29368C1297C943B00856163 /* IPTextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTextViewDelegate.swift; sourceTree = "<group>"; };
 		E29FECBD291175BB00F6DDE5 /* Draw-And-Edit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Draw-And-Edit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E29FECC0291175BB00F6DDE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E29FECC2291175BB00F6DDE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				E29FECD62911789400F6DDE5 /* IPTextView.swift */,
+				E29368C1297C943B00856163 /* IPTextViewDelegate.swift */,
 			);
 			path = TextView;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				E20CCE132914436800020C22 /* IPUIViewExtension.swift in Sources */,
 				E29FECC1291175BB00F6DDE5 /* AppDelegate.swift in Sources */,
 				E230B02829709FC800F9A628 /* DifferentUsefulValues.swift in Sources */,
+				E29368C2297C943B00856163 /* IPTextViewDelegate.swift in Sources */,
 				E2AA5C752939DA6300E26497 /* IPNSTextStorage.swift in Sources */,
 				E2A6FF4B292A84EC00C72421 /* IPFont.swift in Sources */,
 				E29FECC3291175BB00F6DDE5 /* SceneDelegate.swift in Sources */,
